@@ -20,4 +20,5 @@ def generate_launch_description():
             namespace='barometer',
             executable='barometer_publisher',
             name='sensors'
+        ),
     ])
