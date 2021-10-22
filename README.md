@@ -67,7 +67,7 @@ Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
 
 ## Thermometer
 
-Base on a new library, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
+Base on a new library, called DOATLAS01, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
 Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
 
 ## Libraries
