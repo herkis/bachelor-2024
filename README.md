@@ -11,11 +11,12 @@ Import all the files with the command
 
 Move the content of the src file if you already have one in the folder
 
-	sudo mv -v srcTemp/*  src/
+	sudo mv -v Sensors_drivers_BROV2/src/* src/
+	sudo rm -r Sensors_drivers_BROV2/src/
+	sudo mv -v Sensors_drivers_BROV2/*  .
 
 Build all the packages with init.py
 
-	cd dev_ws/
 	python3 init.py
 	
 Source the setup files

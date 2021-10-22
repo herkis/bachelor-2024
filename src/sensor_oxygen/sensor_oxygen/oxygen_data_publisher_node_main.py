@@ -1,5 +1,5 @@
 import rclpy
-from sensor_thermometer import oxygen_data_publisher_node as node
+from sensor_oxygen import oxygen_data_publisher_node as node
 
 
 def main(args=None):
