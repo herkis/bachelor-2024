@@ -41,6 +41,12 @@ Launch the publisher-listener
 	cd launch/
 	ros2 launch sensor.launch.py
 
+
+To remove all of the files, go in dev_ws/ and paste this command
+
+	sudo rm -r launch/ src/sensor_* README.md LICENSE Sensors_drivers_BROV2/
+	
+	
 ## Sensor suite
 
 Sensors used in this project:

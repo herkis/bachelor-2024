@@ -269,6 +269,7 @@ class DOATLAS01(object):
                 
         # adc = self._bus.read_i2c_block_data(self._TSYS01_ADDR, self._TSYS01_READ, 3)
         # adc = adc[0] << 16 | adc[1] << 8 | adc[2]
+        print(self._oxygen)
         self._oxygen(dev.read())
         return True
 
