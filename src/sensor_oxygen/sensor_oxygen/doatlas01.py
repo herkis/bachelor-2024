@@ -265,17 +265,16 @@ class DOATLAS01(object):
         # Wait time for the sensor to reach a value : at least 1.5s
             time.sleep(1.5)
             for dev in device_list:
-                print(dev.read())
+                self._oxygen = dev.read()
                 
         # adc = self._bus.read_i2c_block_data(self._TSYS01_ADDR, self._TSYS01_READ, 3)
         # adc = adc[0] << 16 | adc[1] << 8 | adc[2]
-        print(self._oxygen)
-        self._oxygen(dev.read())
+        self._calc_oxygen()
         return True
 
     # Temperature in requested units
     # default degrees C
-    def oxygen(self, conversion=UNITS_mg_L):                                                            # Change if other units wanted
+    def _calc_oxygen(self, conversion=UNITS_mg_L):                                                            # Change if other units wanted
         if conversion == 2:
             return (9/5) * self._oxygen + 32
         elif conversion == 3:
