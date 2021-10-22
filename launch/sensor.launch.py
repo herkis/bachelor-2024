@@ -21,4 +21,10 @@ def generate_launch_description():
             executable='barometer_publisher',
             name='sensors'
         ),
+        Node(
+            package='sensor_oxygen',
+            namespace='oxygen',
+            executable='oxygen_publisher',
+            name='sensors'
+        ),
     ])

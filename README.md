@@ -9,8 +9,16 @@ Import all the files with the command
 
 	git clone https://github.com/NathanLec/Sensors_drivers_BROV2
 
+Move the launch folder and the init.py file in the dev_ws/
+
+	cd
+	cd ..
+	sudo mv dev_ws/src/launch dev_ws/
+	sudo mv dev_ws/src/init.py dev_ws/
+
 Build all the packages with init.py
 
+	cd dev_ws/
 	python3 init.py
 	
 Source the setup files
