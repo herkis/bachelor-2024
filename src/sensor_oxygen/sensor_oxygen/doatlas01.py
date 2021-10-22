@@ -217,7 +217,7 @@ def get_devices():
 device_list = get_devices()
 
   
-class DOATLAS(object):
+class DOATLAS01(object):
     
     def __init__(self, bus=1):
         # mg/L

@@ -4,6 +4,19 @@ Sensor-drivers and connection to ROS2 architecture [ROS2 Galactic](https://docs.
 
 ## Use
 
+For a quick use, paste these commands
+More details for each command come after
+
+	cd dev_ws/
+	git clone https://github.com/NathanLec/Sensors_drivers_BROV2
+	sudo mv -v Sensors_drivers_BROV2/src/* src/
+	sudo rm -r Sensors_drivers_BROV2/src/
+	sudo mv -v Sensors_drivers_BROV2/*  .
+	python3 init.py
+	. install/setup.bash
+	cd launch/
+	ros2 launch sensor.launch.py
+
 Go in the dev_ws/ folder
 Import all the files with the command
 
