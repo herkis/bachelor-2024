@@ -4,17 +4,14 @@ Sensor-drivers and connection to ROS2 architecture [ROS2 Galactic](https://docs.
 
 ## Use
 
-Go in the dev_ws/src file
+Go in the dev_ws/ folder
 Import all the files with the command
 
 	git clone https://github.com/NathanLec/Sensors_drivers_BROV2
 
-Move the launch folder and the init.py file in the dev_ws/
+Move the content of the src file if you already have one in the folder
 
-	cd
-	cd ..
-	sudo mv dev_ws/src/launch dev_ws/
-	sudo mv dev_ws/src/init.py dev_ws/
+	sudo mv -v srcTemp/*  src/
 
 Build all the packages with init.py
 
