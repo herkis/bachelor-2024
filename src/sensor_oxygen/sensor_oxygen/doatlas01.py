@@ -221,7 +221,7 @@ class DOATLAS01(object):
     
     def __init__(self, bus=1):
         # mg/L
-        self._oxygen = 0
+        self._oxygen = 0.
         self._k = []
         
         try:
@@ -263,10 +263,10 @@ class DOATLAS01(object):
         for dev in device_list:
             dev.write("R")
         # Wait time for the sensor to reach a value : at least 1.5s
-            time.sleep(1.5)
+            time.sleep(2)
             for dev in device_list:
-                self._oxygen = dev.read()
-                
+                 text = dev.read().split(" ")[-1].split("\x00")[0]
+                 self._oxygen = float(text)
         # adc = self._bus.read_i2c_block_data(self._TSYS01_ADDR, self._TSYS01_READ, 3)
         # adc = adc[0] << 16 | adc[1] << 8 | adc[2]
         self._calc_oxygen()

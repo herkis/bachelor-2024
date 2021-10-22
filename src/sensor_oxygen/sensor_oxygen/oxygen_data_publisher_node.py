@@ -10,7 +10,7 @@ class OxygenDataPublisher(Node):
     def __init__(self):
         super().__init__('OxygenDataPublisher')
         self.publisher_ = self.create_publisher(Oxygen, 'oxygen_data', 10)
-        read_period = 0.1  # seconds
+        read_period = 0.01  # seconds
         self.timer = self.create_timer(read_period, self.oxygen_read_and_publish)
 
         self.sensor = doatlas01.DOATLAS01()
@@ -24,7 +24,7 @@ class OxygenDataPublisher(Node):
 
         # Reading thermometer and loading data into custom message
         if self.sensor.read():
-                msg.oxygen_concentration     = self.sensor.oxygen()
+                msg.oxygen_concentration     = self.sensor._oxygen
         else:
                 print("Sensor read failed!")
                 exit(1)
