@@ -24,7 +24,7 @@ class SalinityDataPublisher(Node):
 
         # Reading thermometer and loading data into custom message
         if self.sensor.read():
-                msg.salinity_concentration     = self.sensor._salinity
+                msg.salinity_value     = self.sensor._salinity
         else:
                 print("Sensor read failed!")
                 exit(1)
