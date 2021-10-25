@@ -27,4 +27,10 @@ def generate_launch_description():
             executable='oxygen_publisher',
             name='sensors'
         ),
+        Node(
+            package='sensor_salinity',
+            namespace='salinity',
+            executable='salinity_publisher',
+            name='sensors'
+        ),
     ])
