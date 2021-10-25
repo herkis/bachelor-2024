@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'sensor_salinty'
+package_name = 'sensor_salinity'
 
 setup(
     name=package_name,
