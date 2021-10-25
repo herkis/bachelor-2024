@@ -195,7 +195,7 @@ class AtlasI2C:
 
 
 # Valid units
-UNITS_mg_L = 1
+UNITS_us_cm = 1
 
 # Wait time
 delay_time = 1.5
@@ -220,7 +220,7 @@ device_list = get_devices()
 class CATLAS01(object):
     
     def __init__(self, bus=1):
-        # mg/L
+        # µs/cm
         self._salinity = 0.
         self._k = []
         
@@ -274,7 +274,7 @@ class CATLAS01(object):
 
     # Temperature in requested units
     # default degrees C
-    def _calc_salinity(self, conversion=UNITS_mg_L):                                                            # Change if other units wanted
+    def _calc_salinity(self, conversion=UNITS_us_cm):                                                            # Change if other units wanted
         if conversion == 2:
             return (9/5) * self._salinity + 32
         elif conversion == 3:
