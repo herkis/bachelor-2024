@@ -31,4 +31,4 @@ class SalinityDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /thermometer_data
         self.publisher_.publish(msg)
-        self.get_logger().info('O: %0.2f mg/L' % (msg.salinity_value))
+        self.get_logger().info('O: %0.2f µs/cm' % (msg.salinity_value))
