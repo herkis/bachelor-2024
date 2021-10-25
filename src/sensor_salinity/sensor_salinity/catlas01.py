@@ -274,7 +274,7 @@ class CATLAS01(object):
 
     # Temperature in requested units
     # default degrees C
-    def _calc_oxygen(self, conversion=UNITS_mg_L):                                                            # Change if other units wanted
+    def _calc_salinity(self, conversion=UNITS_mg_L):                                                            # Change if other units wanted
         if conversion == 2:
             return (9/5) * self._salinity + 32
         elif conversion == 3:
