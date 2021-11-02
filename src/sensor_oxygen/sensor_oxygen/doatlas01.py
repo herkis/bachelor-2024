@@ -203,26 +203,16 @@ delay_time = 0.6
 
 def get_devices():
     device = AtlasI2C()
-    device_address_list = device.list_i2c_devices()
+    i = 97
     device_list = []
+    
+    device.set_i2c_address(i)
+    response = device.query("I")
+    moduletype = response.split(",")[1] 
+    
+    return AtlasI2C(address = i, moduletype = moduletype)
 
-    for i in device_address_list:
-        if i == 97:
-            device.set_i2c_address(i)
-            response = device.query("I")
-            try:
-                moduletype = response.split(",")[1]
-            except:
-                return False
-            device_list.append(AtlasI2C(address = i, moduletype = moduletype))
-    return device_list 
-
-GO = False
-
-while not(GO)
-    device_list = get_devices()
-    GO = device_list
-
+device_list = get_devices()
 
   
 class DOATLAS01(object):

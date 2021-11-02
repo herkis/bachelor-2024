@@ -203,16 +203,14 @@ delay_time = 0.6
 
 def get_devices():
     device = AtlasI2C()
-    device_address_list = device.list_i2c_devices()
+    i = 100
     device_list = []
     
-    for i in device_address_list:
-        if i == 100:
-            device.set_i2c_address(i)
-            response = device.query("I")
-            moduletype = response.split(",")[1] 
-            device_list.append(AtlasI2C(address = i, moduletype = moduletype))
-    return device_list 
+    device.set_i2c_address(i)
+    response = device.query("I")
+    moduletype = response.split(",")[1] 
+    
+    return AtlasI2C(address = i, moduletype = moduletype)
 
 device_list = get_devices()
 
