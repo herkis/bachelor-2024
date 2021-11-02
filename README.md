@@ -14,7 +14,7 @@ More details for each command come after
 	sudo mv -v Sensors_drivers_BROV2/*  .
 	python3 init.py
 	. install/setup.bash
-	ros2 launch launch/sensor.launch.py
+	python3 launch.py
 
 Go in the dev_ws/ folder
 Import all the files with the command
@@ -37,7 +37,7 @@ Source the setup files
 	
 Launch the publishers
 
-	ros2 launch launch/sensor.launch.py
+	python3 launch.py
 
 
 

@@ -263,7 +263,7 @@ class CATLAS01(object):
         for dev in device_list:
             dev.write("R")
         # Wait time for the sensor to reach a value : at least 1.5s
-            time.sleep(1.5)
+            time.sleep(delay_time)
             for dev in device_list:
                  text = dev.read().split(" ")[-1].split("\x00")[0]
                  self._salinity = float(text)
