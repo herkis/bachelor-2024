@@ -258,13 +258,11 @@ class CATLAS01(object):
         # Request conversion
         # self._bus.write_byte(self._TSYS01_ADDR, self._TSYS01_CONVERT)
         
-        for dev in device_list:
-            dev.write("R")
+        dev.write("R")
         # Wait time for the sensor to reach a value : at least 1.5s
-            time.sleep(delay_time)
-            for dev in device_list:
-                 text = dev.read().split(" ")[-1].split("\x00")[0]
-                 self._salinity = float(text)
+        time.sleep(delay_time)
+        text = dev.read().split(" ")[-1].split("\x00")[0]
+        self._salinity = float(text)
         # adc = self._bus.read_i2c_block_data(self._TSYS01_ADDR, self._TSYS01_READ, 3)
         # adc = adc[0] << 16 | adc[1] << 8 | adc[2]
         self._calc_salinity()

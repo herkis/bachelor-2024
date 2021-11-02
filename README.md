@@ -37,7 +37,7 @@ Source the setup files
 	
 Launch the publishers
 
-	python3 launch.py
+	ros2 launch launch/sensor.launch.py
 
 
 
