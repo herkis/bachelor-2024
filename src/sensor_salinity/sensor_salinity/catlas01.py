@@ -212,7 +212,7 @@ def get_devices():
     
     return AtlasI2C(address = i, moduletype = moduletype)
 
-device_list = get_devices()
+dev = get_devices()
 
   
 class CATLAS01(object):
