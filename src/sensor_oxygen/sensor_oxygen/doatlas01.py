@@ -205,7 +205,7 @@ def get_devices():
     device = AtlasI2C()
     device_address_list = device.list_i2c_devices()
     device_list = []
-    
+    print(device_address_list)
     for i in device_address_list:
         if i == 97:
             device.set_i2c_address(i)

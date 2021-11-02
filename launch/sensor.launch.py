@@ -5,10 +5,12 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     return LaunchDescription([
-        #launch.actions.ExecuteProcess(
-        #    cmd=['ros2', 'bag', 'record', '-a'],
-        #    output='screen'
-        #),
+        Node(
+            package='sensor_oxygen',
+            namespace='oxygen',
+            executable='oxygen_publisher',
+            name='sensors'
+        ),
         Node(
             package='sensor_thermometer',
             namespace='thermometer',
@@ -19,12 +21,6 @@ def generate_launch_description():
             package='sensor_barometer',
             namespace='barometer',
             executable='barometer_publisher',
-            name='sensors'
-        ),
-        Node(
-            package='sensor_oxygen',
-            namespace='oxygen',
-            executable='oxygen_publisher',
             name='sensors'
         ),
         Node(
