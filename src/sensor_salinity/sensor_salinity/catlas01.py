@@ -207,11 +207,11 @@ def get_devices():
     device_list = []
     
     for i in device_address_list:
-        device.set_i2c_address(i)
-        response = device.query("I")
-        moduletype = response.split(",")[1] 
-        response = device.query("name,?").split(",")[1]
-        device_list.append(AtlasI2C(address = i, moduletype = moduletype, name = response))
+        if i == 100:
+            device.set_i2c_address(i)
+            response = device.query("I")
+            moduletype = response.split(",")[1] 
+            device_list.append(AtlasI2C(address = i, moduletype = moduletype))
     return device_list 
 
 device_list = get_devices()

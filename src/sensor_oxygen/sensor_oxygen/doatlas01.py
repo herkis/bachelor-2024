@@ -198,7 +198,7 @@ class AtlasI2C:
 UNITS_mg_L = 1
 
 # Wait time
-delay_time = 1.5
+delay_time = 0.6
 
 
 def get_devices():
@@ -207,11 +207,11 @@ def get_devices():
     device_list = []
     
     for i in device_address_list:
-        device.set_i2c_address(i)
-        response = device.query("I")
-        moduletype = response.split(",")[1] 
-        response = device.query("name,?").split(",")[1]
-        device_list.append(AtlasI2C(address = i, moduletype = moduletype, name = response))
+        if i == 97:
+            device.set_i2c_address(i)
+            response = device.query("I")
+            moduletype = response.split(",")[1] 
+            device_list.append(AtlasI2C(address = i, moduletype = moduletype))
     return device_list 
 
 device_list = get_devices()
@@ -263,7 +263,7 @@ class DOATLAS01(object):
         for dev in device_list:
             dev.write("R")
         # Wait time for the sensor to reach a value : at least 1.5s
-            time.sleep(2)
+            time.sleep(delay_time)
             for dev in device_list:
                  text = dev.read().split(" ")[-1].split("\x00")[0]
                  self._oxygen = float(text)

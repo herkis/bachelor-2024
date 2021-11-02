@@ -4,8 +4,6 @@ from rclpy.node import Node
 from sensor_barometer import ms5837
 from sensor_interfaces.msg import Barometer
 
-
-
 class BarometerDataPublisher(Node):
     # Initializer 
     def __init__(self):
