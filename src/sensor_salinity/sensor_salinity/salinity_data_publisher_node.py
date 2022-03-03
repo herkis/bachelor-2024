@@ -10,7 +10,7 @@ class SalinityDataPublisher(Node):
     def __init__(self):
         super().__init__('SalinityDataPublisher')
         self.publisher_ = self.create_publisher(Salinity, 'salinity_data', 10)
-        read_period = 0.01  # seconds
+        read_period = 2  # seconds
         self.timer = self.create_timer(read_period, self.salinity_read_and_publish)
 
         self.sensor = catlas01.CATLAS01()

@@ -10,7 +10,7 @@ class OxygenDataPublisher(Node):
     def __init__(self):
         super().__init__('OxygenDataPublisher')
         self.publisher_ = self.create_publisher(Oxygen, 'oxygen_data', 10)
-        read_period = 0.01  # seconds
+        read_period = 2  # seconds
         self.timer = self.create_timer(read_period, self.oxygen_read_and_publish)
 
         self.sensor = doatlas01.DOATLAS01()
