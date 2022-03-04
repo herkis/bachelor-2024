@@ -27,9 +27,7 @@ class ThermometerDataPublisher(Node):
 
         #Getting the mac address of the system:
         msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
-
-        #local_minutes = time.strftime("%M",tim)
-        # Reading thermometer and loading data into custom message
+        
         if self.sensor.read():
                 msg.temperature_celsius     = self.sensor.temperature()                         # Default is degrees C (no arguments)
                 msg.temperature_farenheit   = self.sensor.temperature(tsys01.UNITS_Farenheit)   # Request Farenheit

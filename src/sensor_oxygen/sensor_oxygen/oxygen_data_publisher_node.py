@@ -19,16 +19,16 @@ class OxygenDataPublisher(Node):
         #     exit(1)
 
     def oxygen_read_and_publish(self):
-        # Custom thermometer message to publish. Can be found in the brov2_interfaces.
+        # Custom dissolved oxygen message to publish. Can be found in the brov2_interfaces.
         msg = Oxygen()
 
-        # Reading thermometer and loading data into custom message
+        # Reading dissolved oxygen and loading data into custom message
         if self.sensor.read():
                 msg.oxygen_concentration     = self.sensor._oxygen
         else:
                 print("Sensor read failed!")
                 exit(1)
 
-        # Publishing message and logging data sent over the topic /thermometer_data
+        # Publishing message and logging data sent over the topic /oxygen_data
         self.publisher_.publish(msg)
         self.get_logger().info('O: %0.2f mg/L' % (msg.oxygen_concentration))
