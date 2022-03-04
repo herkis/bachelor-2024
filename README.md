@@ -2,13 +2,16 @@
 
 Sensor-drivers and connection to ROS2 architecture [ROS2 Galactic](https://docs.ros.org/en/ros2_documentation/galactic/index.html).
 
+This is a continuation of a previous groups code for developing sensors to work underwater with the BlueRobotics BlueROV-2.
+Link to the original code: https://github.com/NathanLec/Sensors_drivers_BROV2
+
 ## Use
 
 For a quick use, paste these commands
 More details for each command come after
 
 	cd dev_ws/
-	git clone https://github.com/NathanLec/Sensors_drivers_BROV2
+	git clone https://github.com/JoJoHTM/Sensors_drivers_BROV2
 	sudo mv -v Sensors_drivers_BROV2/src/* src/
 	sudo rm -r Sensors_drivers_BROV2/src/
 	sudo mv -v Sensors_drivers_BROV2/*  .
@@ -19,7 +22,7 @@ More details for each command come after
 Go in the dev_ws/ folder
 Import all the files with the command
 
-	git clone https://github.com/NathanLec/Sensors_drivers_BROV2
+	git clone https://github.com/JoJoHTM/Sensors_drivers_BROV2
 
 Move the content of the src file if you already have one in the folder
 
