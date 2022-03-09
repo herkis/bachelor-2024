@@ -1,5 +1,5 @@
 import rclpy
-from rclpy.node import node
+from rclpy.node import Node
 from sensor_thermometer import tsys01
 from sensor_interfaces.msg import Thermometer
 
