@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'thermometer_publisher = sensor_thermometer.thermometer_data_publisher_node_main:main'
-            'thermometer_subscriber = sensor_thermometer.thermometer_data_subscriber_node:main',
+            'thermometer_publisher = sensor_thermometer.thermometer_data_publisher_node_main:main',
+            'thermometer_subscriber = sensor_thermometer.thermometer_data_subscriber_node:main'
         ],
     },
 )
