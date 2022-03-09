@@ -1,4 +1,4 @@
-rom rclpy.node import Node
+from rclpy.node import Node
 
 # ms5837 needed in order to utilize the BlueRobotics MS5837 Python Library which must be installed
 from sensor_barometer import ms5837
