@@ -3,7 +3,8 @@ from rclpy.node import Node
 # tsys01 needed in order to utilize the BlueRobotics TSYS01 Python Library which must be installed
 from sensor_salinity import catlas01
 from sensor_interfaces.msg import Salinity
-
+import time
+import re, uuid
 
 class SalinityDataPublisher(Node):
     # Initializer 
@@ -22,6 +23,12 @@ class SalinityDataPublisher(Node):
         # Custom conductivity message to publish. Can be found in the brov2_interfaces.
         msg = Salinity()
 
+        tim = time.localtime()
+        msg.local_time =  time.strftime("%H:%M",tim)
+
+        #Getting the mac address of the system:
+        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
+
         # Reading thermometer and loading data into custom message
         if self.sensor.read():
                 msg.salinity_value     = self.sensor._salinity
@@ -31,4 +38,6 @@ class SalinityDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /thermometer_data
         self.publisher_.publish(msg)
-        self.get_logger().info('O: %0.2f µs/cm' % (msg.salinity_value))
+        self.get_logger().info('Mac: %s  O: %0.2f µs/cm  %s' % (msg.mac,
+                                                                msg.salinity_value,
+                                                                msg.local_time))
