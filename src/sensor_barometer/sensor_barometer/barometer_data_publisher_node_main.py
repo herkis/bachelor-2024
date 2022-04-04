@@ -11,7 +11,7 @@ def main(args=None):
     # Reading and publishing data at defined rate (0.1 seconds)
     rclpy.spin(barometer_data_publisher)
 
-    # Clean up when script is stopped
+    # Clean up when script is stopped 
     barometer_data_publisher.destroy_node()
     rclpy.shutdown()
 

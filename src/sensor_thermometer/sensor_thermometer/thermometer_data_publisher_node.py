@@ -10,24 +10,28 @@ class ThermometerDataPublisher(Node):
     # Initializer 
     def __init__(self):
         super().__init__('ThermometerDataPublisher')
-        self.publisher_ = self.create_publisher(Thermometer, 'thermometer_data', 10)
-        read_period = 2  # seconds
+        self.publisher_ = self.create_publisher(Thermometer, 'thermometer_data', 10)    # Creates a publisher over the topic thermometer_data
+        read_period = 2  # Does a reading every 2 seconds
         self.timer = self.create_timer(read_period, self.thermometer_read_and_publish)
 
         self.sensor = tsys01.TSYS01()
         if not self.sensor.init():
+            # If sensor can not be detected
             print("Sensor could not be initialized")
             exit(1)
 
     def thermometer_read_and_publish(self):
         # Custom thermometer message to publish. Can be found in the brov2_interfaces.
         msg = Thermometer()
+
+        # Geting the local time
         tim = time.localtime()
         msg.local_time =  time.strftime("%H:%M",tim)
 
-        #Getting the mac address of the system:
+        # Getting the mac address of the system:
         msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
-        
+
+        # Calls the function sensor.read in TSY01 to get the desired values from the sensors
         if self.sensor.read():
                 msg.temperature_celsius     = self.sensor.temperature()                         # Default is degrees C (no arguments)
                 msg.temperature_farenheit   = self.sensor.temperature(tsys01.UNITS_Farenheit)   # Request Farenheit
