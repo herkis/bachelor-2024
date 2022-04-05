@@ -28,6 +28,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Thermometer.msg"
   "msg/Oxygen.msg"
   "msg/Salinity.msg"
+  "msg/Battery.msg"
   DEPENDENCIES std_msgs geometry_msgs
  )
 

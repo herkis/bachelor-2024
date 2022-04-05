@@ -1,0 +1,3 @@
+float64 battery_life
+string local_time
+string mac

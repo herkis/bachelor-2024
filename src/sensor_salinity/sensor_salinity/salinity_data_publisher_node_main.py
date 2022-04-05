@@ -8,7 +8,7 @@ def main(args=None):
     # Construct the publisher
     salinity_data_publisher = node.SalinityDataPublisher()
 
-    # Reading and publishing data at defined rate (0.1 seconds)
+    # Reading and publishing data at defined rate (2 seconds)
     rclpy.spin(salinity_data_publisher)
 
     # Clean up when script is stopped
