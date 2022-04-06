@@ -48,7 +48,13 @@ To remove all of the files, go in dev_ws/ and paste this command
 
 	sudo rm -r launch/ src/sensor_* README.md LICENSE Sensors_drivers_BROV2/
 	
-	
+## Documentation on code
+
+A lot of the comments made in the files of "sensor_thermometer" folder can be applied to the 
+code for the other sensors. Because of this the comments for the temperature code is more
+detailed than for the other sensors.
+
+
 ## Sensor suite
 
 Sensors used in this project:
@@ -70,12 +76,12 @@ Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
 
 ## Disolve Oxygen
 
-Base on a new library, called DOATLAS01, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
+Based on a new library, called DOATLAS01, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
 Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
 
 ## Conductivity
 
-Base on a new library, called CATLAS01, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
+Based on a new library, called CATLAS01, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
 Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
 
 ## Libraries

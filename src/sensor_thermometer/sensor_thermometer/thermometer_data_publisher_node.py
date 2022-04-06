@@ -1,10 +1,11 @@
+# This code is responsible for getting the data from the sensor and publishing it.
 from rclpy.node import Node
 
 # tsys01 needed in order to utilize the BlueRobotics TSYS01 Python Library which must be installed
 from sensor_thermometer import tsys01
 from sensor_interfaces.msg import Thermometer
 import time
-import  re, uuid
+import  re, uuid        # Used for getting the mac address 
 
 class ThermometerDataPublisher(Node):
     # Initializer 
@@ -14,13 +15,14 @@ class ThermometerDataPublisher(Node):
         read_period = 2  # Does a reading every 2 seconds
         self.timer = self.create_timer(read_period, self.thermometer_read_and_publish)
 
+        # Assign the function TSYS01() in the tsys01.py to self.sensor
         self.sensor = tsys01.TSYS01()
         if not self.sensor.init():
             # If sensor can not be detected
             print("Sensor could not be initialized")
             exit(1)
 
-    def thermometer_read_and_publish(self):
+    def thermometer_read_and_publish(self):s
         # Custom thermometer message to publish. Can be found in the brov2_interfaces.
         msg = Thermometer()
 
