@@ -22,7 +22,7 @@ class ThermometerDataPublisher(Node):
             print("Sensor could not be initialized")
             exit(1)
 
-    def thermometer_read_and_publish(self):s
+    def thermometer_read_and_publish(self):
         # Custom thermometer message to publish. Can be found in the brov2_interfaces.
         msg = Thermometer()
 

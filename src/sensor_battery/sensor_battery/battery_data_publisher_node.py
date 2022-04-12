@@ -17,5 +17,14 @@ class BatteryDataPublisher(Node):
         # Custom battery message to publish. Can be found in the sensor_interfaces.
         msg = Battery()
 
-
+        
         # TODO: legg inn kode for avlesning av batteri her samt faktisk publishe 
+
+        adc = self.sensor.read_adc(0,gain=GAIN) # Reads the value from channel A0
+
+        V = adc*(5.0/1024)*11.0 # To convert the numbers read from adc to more logical values
+
+        self.publisher_.publish(msg)
+        self.get_logger().info(##Write in here)
+
+
