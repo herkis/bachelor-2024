@@ -1,3 +1,5 @@
-float64 battery_life
+float64 battery_percent
+float64 battery_voltage
+float64 battery_current
 string local_time
 string mac
