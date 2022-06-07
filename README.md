@@ -54,6 +54,12 @@ A lot of the comments made in the files of "sensor_thermometer" folder can be ap
 code for the other sensors. Because of this the comments for the temperature code is more
 detailed than for the other sensors.
 
+## Battery code
+
+There have been some issues regarding the hardware for battery sensing, hence the code not 
+being finished. Though it may not be finished, a lot of the setup is fixed. 
+What mainly needs to be done is fill in the code in "battery_data_publisher_node.py", as
+well as making necessary adjustments in "init.py" and launch file. 
 
 ## Sensor suite
 

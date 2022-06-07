@@ -2,6 +2,7 @@ import launch
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
+#Once the battery code is written re-add the code below
 
 def generate_launch_description():
     return LaunchDescription([
@@ -29,10 +30,10 @@ def generate_launch_description():
             executable='salinity_publisher',
             name='sensors'
         ),
-        Node(
-            package='sensor_battery',
-            namespace='battery',
-            executable='battery_publisher',
-            name='sensors'
-        ),
+        #Node(
+        #    package='sensor_battery',
+        #    namespace='battery',
+        #    executable='battery_publisher',
+        #    name='sensors'
+        #),
     ])
