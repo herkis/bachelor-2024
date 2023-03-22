@@ -5,7 +5,7 @@ Sensor-drivers and connection to ROS2 architecture [ROS2 Humble](https://docs.ro
 
 This is a continuation of two previous groups code for developing sensors to work underwater both with and without the BlueRobotics BlueROV-2.
 
-Link to the first original code: https://github.com/NathanLec/Sensors_drivers_BROV2\
+Link to the first original code: https://github.com/NathanLec/Sensors_drivers_BROV2 \
 Link to the second original code: https://github.com/JoJoHTM/Sensors_drivers_BROV2
 
 ## Use
