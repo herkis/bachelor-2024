@@ -7,7 +7,7 @@ class BatteryDataPublisher(Node):
     # Initialize
     def __init__(self):
         super().__init__('BatteryDataPublisher')
-        self.publisher_ = self.create_publisher(Barometer, 'battery_data', 10)    # Creates a publisher over the topic battery_data
+        self.publisher_ = self.create_publisher(Battery, 'battery_data', 10)    # Creates a publisher over the topic battery_data
         read_period = 2  # Does a reading every 2 seconds
         self.timer = self.create_timer(read_period, self.battery_read_and_publish)
 
@@ -35,6 +35,6 @@ class BatteryDataPublisher(Node):
         adc_value0 = self.read_adc(0, gain=GAIN) #Reads the ADC-value on channel A0
 
         self.publisher_.publish(msg)
-        self.get_logger().info(##Write in here)
+        self.get_logger().info()##Write in here)
 
 
