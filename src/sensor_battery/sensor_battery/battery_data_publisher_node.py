@@ -1,7 +1,9 @@
 from rclpy.node import Node
 
-from sensor_battery import ads1x15
+from sensor_battery.sensor_battery import ads1x15
 from sensor_interfaces.msg import Battery
+import time
+import  re, uuid
 
 class BatteryDataPublisher(Node):
     # Initialize
@@ -16,6 +18,13 @@ class BatteryDataPublisher(Node):
     def battery_read_and_publish(self):
         # Custom battery message to publish. Can be found in the sensor_interfaces.
         msg = Battery()
+       
+        # Getting the local time
+        tim = time.localtime()
+        msg.local_time =  time.strftime("%H:%M",tim)
+
+        # Getting the mac address of the system
+        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
 
         # Choose a gain of 1 for reading voltages from 0 to 4.09V.
         # Or pick a different gain to change the range of voltages that are read:
@@ -27,6 +36,7 @@ class BatteryDataPublisher(Node):
         #  -  16 = +/-0.256V
         # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
         GAIN = 1
+
         
         # TODO:
         # Get readings from ADS1115 and convert to proper values.(https://discuss.bluerobotics.com/t/need-help-connecting-the-power-sense-module-r2-to-a-arduino/4679)
@@ -35,6 +45,7 @@ class BatteryDataPublisher(Node):
         adc_value0 = self.read_adc(0, gain=GAIN) #Reads the ADC-value on channel A0
 
         self.publisher_.publish(msg)
-        self.get_logger().info()##Write in here)
+        self.get_logger().info('Mac: %s,  %s' % (msg.mac,
+                                                               msg.local_time))
 
 
