@@ -13,7 +13,8 @@ Link to the second original code: https://github.com/JoJoHTM/Sensors_drivers_BRO
 For a quick use, paste these commands
 More details for each command come after
 
-	cd dev_ws/
+	mkdir test_ws
+	cd test_ws/
 	git clone https://github.com/Pederbs/SUMS
 	sudo mv -v SUMS/src/* src/
 	sudo rm -r SUMS/src/
