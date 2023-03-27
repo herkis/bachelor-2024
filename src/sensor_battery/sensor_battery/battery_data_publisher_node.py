@@ -41,19 +41,19 @@ class BatteryDataPublisher(Node):
         # TODO:
         # Get readings from ADS1115 and convert to proper values.(https://discuss.bluerobotics.com/t/need-help-connecting-the-power-sense-module-r2-to-a-arduino/4679)
         # Compare these values to a graph of battery lifecycle to determine battery percentage. 
-        if self.sensor.read():
-            adc_value0 = self.read_adc(0, gain=GAIN) #Reads the ADC-value on channel A0
-            adc_value1 = self.read_adc(1, gain=GAIN) #Reads the ADC-value on channel A1
+        #if self.sensor.read():
+        adc_value0 = self.read_adc(0, gain=GAIN) #Reads the ADC-value on channel A0
+        adc_value1 = self.read_adc(1, gain=GAIN) #Reads the ADC-value on channel A1
 
-            I = (adc_value0*(5/1024)-0.33)*38.8788 #Lurer på om det skal være 1023 ikke 1024 siden det starter på 0 ikke 1
-            V = adc_value1*(5/1024)*11.0
+        I = (adc_value0*(5/1024)-0.33)*38.8788 #Lurer på om det skal være 1023 ikke 1024 siden det starter på 0 ikke 1
+        V = adc_value1*(5/1024)*11.0
 
-            msg.battery_voltage = V
-            msg.battery_current = I
-            msg.battery_percent = 404.0
-        else:
-            print("Sensor read failed!")
-            exit(1)
+        msg.battery_voltage = V
+        msg.battery_current = I
+        msg.battery_percent = 404.0
+        #else:
+        #    print("Sensor read failed!")
+        #    exit(1)
 
         self.publisher_.publish(msg)
         self.get_logger().info('Mac: %s  Percent: %0.2f %  V: %0.2f  I: %0.2f  %s' % (msg.mac,
