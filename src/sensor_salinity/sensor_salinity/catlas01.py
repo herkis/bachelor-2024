@@ -21,7 +21,7 @@ class AtlasI2C:
     # certain older boards use bus 0
     DEFAULT_BUS = 1
     # the default address for the sensor
-    DEFAULT_ADDRESS = 98
+    DEFAULT_ADDRESS = 100
     LONG_TIMEOUT_COMMANDS = ("R", "CAL")
     SLEEP_COMMANDS = ("SLEEP", )
 
