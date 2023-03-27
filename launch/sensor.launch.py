@@ -30,10 +30,10 @@ def generate_launch_description():
             executable='salinity_publisher',
             name='sensors'
         ),
-        #Node(
-        #    package='sensor_battery',
-        #    namespace='battery',
-        #    executable='battery_publisher',
-        #    name='sensors'
-        #),
+        Node(
+            package='sensor_battery',
+            namespace='battery',
+            executable='battery_publisher',
+            name='sensors'
+        ),
     ])
