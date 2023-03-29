@@ -44,8 +44,13 @@ class BarometerDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /barometer_data
         self.publisher_.publish(msg)
-        self.get_logger().info('Mac: %s  Depth: %0.2f m\tP: %0.1f mbar  %0.3f psi  %s' % (msg.mac,
-                                                                                          msg.depth, 
-                                                                                          msg.pressure_mbar, 
-                                                                                          msg.pressure_psi,
-                                                                                          msg.local_time))
+
+        #self.get_logger().info('Mac: %s  Depth: %0.2f m  P: %0.1f mbar  %0.3f psi  %s' % (msg.mac,
+        #                                                                                  msg.depth, 
+        #                                                                                  msg.pressure_mbar, 
+        #                                                                                  msg.pressure_psi,
+        #                                                                                  msg.local_time))
+
+        self.get_logger().info('time: %s  Depth: %0.2f m  P: %0.1f mbar' % (msg.local_time,
+                                                                            msg.depth, 
+                                                                            msg.pressure_mbar))

@@ -39,6 +39,9 @@ class OxygenDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /oxygen_data
         self.publisher_.publish(msg)
-        self.get_logger().info('Mac: %s  O: %0.2f mg/L  %s' % (msg.mac,
-                                                               msg.oxygen_concentration,
-                                                               msg.local_time))
+        #self.get_logger().info('Mac: %s  O: %0.2f mg/L  %s' % (msg.mac,
+        #                                                       msg.oxygen_concentration,
+        #                                                       msg.local_time))
+        
+        self.get_logger().info('time: %s  O: %0.2f mg/L' % (msg.local_time,
+                                                            msg.oxygen_concentration))

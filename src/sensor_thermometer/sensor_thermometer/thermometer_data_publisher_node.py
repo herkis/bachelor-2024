@@ -43,8 +43,11 @@ class ThermometerDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /thermometer_data
         self.publisher_.publish(msg)
-        self.get_logger().info('Mac: %s  T: %0.2f C  %0.2f F  %s' % (msg.mac,
-                                                                     msg.temperature_celsius, 
-                                                                     msg.temperature_farenheit,
-                                                                     msg.local_time))
+        #self.get_logger().info('Mac: %s  T: %0.2f C  %0.2f F  %s' % (msg.mac,
+        #                                                             msg.temperature_celsius, 
+        #                                                             msg.temperature_farenheit,
+        #                                                             msg.local_time))
+        
+        self.get_logger().info('time: %s  T: %0.2f C' % (msg.local_time,
+                                                        msg.temperature_celsius))
 
