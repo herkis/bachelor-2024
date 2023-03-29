@@ -15,6 +15,12 @@ class ThermometerDataPublisher(Node):
         read_period = 2  # Does a reading every 2 seconds
         self.timer = self.create_timer(read_period, self.thermometer_read_and_publish)
 
+        # Assign the function TSYS01() in the tsys01.py to self.sensor
+        self.sensor = tsys01.TSYS01()
+        if not self.sensor.init():
+            # If sensor can not be detected
+            print("Sensor could not be initialized")
+            exit(1)
 
     def thermometer_read_and_publish(self):
         # Custom thermometer message to publish. Can be found in the brov2_interfaces.
