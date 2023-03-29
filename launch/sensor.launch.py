@@ -39,7 +39,7 @@ def generate_launch_description():
         Node(
             package='modem_communication',
             namespace='modem',
-            executable='modem_sender',
+            executable='modem_subscriber',
             name='modem'
         ),
     ])
