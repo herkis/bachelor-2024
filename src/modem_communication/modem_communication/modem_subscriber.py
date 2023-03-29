@@ -10,7 +10,7 @@ class ModemSubscriberNode(Node):
         #defining variables
         self.temp_data = [0.0,0.0]
 
-        self.temp_subscriber = self.create_subscription(Thermometer, 'thermometer_data', self.temp_callback, 10)
+        self.temp_subscriber = self.create_subscription(Thermometer, 'sensor_interfaces/msg/Thermometer', self.temp_callback, 10)
         self.temp_subscriber   # Prevent unused variable warning
 
     def temp_callback(self, msg:Thermometer):
