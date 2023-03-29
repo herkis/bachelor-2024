@@ -43,5 +43,5 @@ class OxygenDataPublisher(Node):
         #                                                       msg.oxygen_concentration,
         #                                                       msg.local_time))
         
-        self.get_logger().info('time: %s  O: %0.2f mg/L' % (msg.local_time,
+        self.get_logger().info('\t\ttime: %s  O: %0.2f mg/L' % (msg.local_time,
                                                             msg.oxygen_concentration))

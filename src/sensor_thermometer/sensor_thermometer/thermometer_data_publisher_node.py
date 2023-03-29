@@ -48,6 +48,6 @@ class ThermometerDataPublisher(Node):
         #                                                             msg.temperature_farenheit,
         #                                                             msg.local_time))
         
-        self.get_logger().info('time: %s  T: %0.2f C' % (msg.local_time,
+        self.get_logger().info('\ttime: %s  T: %0.2f C' % (msg.local_time,
                                                         msg.temperature_celsius))
 

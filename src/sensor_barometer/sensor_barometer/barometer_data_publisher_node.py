@@ -51,6 +51,6 @@ class BarometerDataPublisher(Node):
         #                                                                                  msg.pressure_psi,
         #                                                                                  msg.local_time))
 
-        self.get_logger().info('time: %s  Depth: %0.2f m  P: %0.1f mbar' % (msg.local_time,
+        self.get_logger().info('\ttime: %s  Depth: %0.2f m  P: %0.1f mbar' % (msg.local_time,
                                                                             msg.depth, 
                                                                             msg.pressure_mbar))
