@@ -11,8 +11,8 @@ class OxygenDataPublisher(Node):
     def __init__(self):
         super().__init__('OxygenDataPublisher')
         self.publisher_ = self.create_publisher(Oxygen, 'oxygen_data', 10)  # Creates a publisher over the topic oxygen_data
-        read_period = 2  # Does a reading every 2 seconds
-        self.timer = self.create_timer(read_period, self.oxygen_read_and_publish)
+        self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
+        self.timer = self.create_timer(self.sample_time, self.oxygen_read_and_publish)
 
         self.sensor = doatlas01.DOATLAS01()
         # if not self.sensor.init():                                                                             ## CHANGE

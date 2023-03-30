@@ -11,8 +11,8 @@ class BarometerDataPublisher(Node):
     def __init__(self):
         super().__init__('BarometerDataPublisher')
         self.publisher_ = self.create_publisher(Barometer, 'barometer_data', 10)    # Creates a publisher over the topic barometer_data
-        read_period = 2  # Does a reading every 2 seconds
-        self.timer = self.create_timer(read_period, self.barometer_read_and_publish)
+        self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
+        self.timer = self.create_timer(self.sample_time, self.barometer_read_and_publish)
 
         self.sensor = ms5837.MS5837_30BA()
         # self.sensor.setFluidDensity() # Configuring fluid density for fresh or saltwater. Defaulting to fresh water

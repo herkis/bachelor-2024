@@ -10,8 +10,8 @@ class BatteryDataPublisher(Node):
     def __init__(self):
         super().__init__('BatteryDataPublisher')
         self.publisher_ = self.create_publisher(Battery, 'battery_data', 10)    # Creates a publisher over the topic battery_data
-        read_period = 2  # Does a reading every 2 seconds
-        self.timer = self.create_timer(read_period, self.battery_read_and_publish)
+        self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
+        self.timer = self.create_timer(self.sample_time, self.battery_read_and_publish)
 
         self.sensor = ads1x15.ADS1x15()
 
