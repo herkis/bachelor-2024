@@ -63,26 +63,27 @@ class ModemSubscriberNode(Node):
         self.temperature_subscription   # Prevent unused variable warning
 
     def barometer_callback(self, msg:Barometer):
-        self.barometer_data[0] = msg.pressure_mbar
-        self.barometer_data[1] = msg.local_time
+        self.barometer_data['pressure'] = msg.pressure_mbar
+        self.barometer_data['time'] = msg.local_time
+        self.barometer_data['depth'] = msg.depth
         self.get_logger().info('Extracted %0.2f mbar at time: %s'% (self.barometer_data[0], self.barometer_data[1]))
         print('\nhello form logger\n')
  
     def oxygen_callback(self, msg:Oxygen):
-        self.oxygen_data[0] = msg._oxygen_concentration
-        self.oxygen_data[1] = msg.local_time
+        self.oxygen_data['oxygen'] = msg._oxygen_concentration
+        self.oxygen_data['time'] = msg.local_time
         self.get_logger().info('Extracted %0.2f O at time: %s'% (self.oxygen_data[0], self.oxygen_data[1]))
         print('\nhello form logger\n')
  
     def salinity_callback(self, msg:Salinity):
-        self.salinity_data[0] = msg.salinity_value
-        self.salinity_data[1] = msg.local_time
+        self.salinity_data['salinity'] = msg.salinity_value
+        self.salinity_data['time'] = msg.local_time
         self.get_logger().info('Extracted %0.2f O at time: %s'% (self.salinity_data[0], self.salinity_data[1]))
         print('\nhello form logger\n')
  
     def temperature_callback(self, msg:Thermometer):
-        self.temperature_data[0] = msg.temperature_celsius
-        self.temperature_data[1] = msg.local_time
+        self.temperature_data['temperature'] = msg.temperature_celsius
+        self.temperature_data['time'] = msg.local_time
         self.get_logger().info('Extracted %0.2f C at time: %s'% (self.temperature_data[0], self.temperature_data[1]))
         print('\nhello form logger\n')
         
