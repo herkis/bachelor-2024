@@ -8,11 +8,29 @@ class ModemSubscriberNode(Node):
         super().__init__('modem_subscriber')
 
         #defining variables
-        ##  Convert to dict  ##
-        self.barometer_data = [0.0,0.0]
-        self.oxygen_data = [0.0,0.0]
-        self.salinity_data = [0.0,0.0]
-        self.temperature_data = [0.0,0.0]
+        self.barometer_data = {
+            'time': '00:00',
+            'depth': 0.0,
+            'pressure': 0.0
+        }
+        #self.battery_data = {
+        #    'time': '00:00',
+        #    'voltage': 0.0,
+        #    'current': 0.0,
+        #    'percent': 0.0
+        #}
+        self.oxygen_data = {
+            'time': '00:00',
+            'oxygen': 0.0
+        }
+        self.salinity_data = {
+            'time': '00:00',
+            'salinity': 0.0
+        }
+        self.temperature_data = {
+            'time': '00:00',
+            'temperature': 0.0
+        }
 
         self.barometer_subscription = self.create_subscription(
             Barometer, 
