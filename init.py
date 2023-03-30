@@ -8,4 +8,16 @@ import subprocess
 
 
 ## TODO: Add the battery code the same way the other sensor codes have. i.e. just include sensor_battery here 
-subprocess.run("colcon build --packages-select sensor_interfaces sensor_thermometer sensor_barometer sensor_oxygen sensor_salinity modem_communication",shell=True)
+#subprocess.run("colcon build --packages-select sensor_interfaces sensor_thermometer sensor_barometer sensor_oxygen sensor_salinity modem_communication",shell=True)
+
+packages = [
+    'sensor_interfaces',
+    'sensor_thermometer',
+    'sensor_barometer',
+    'sensor_oxygen',
+    'sensor_salinity',
+#    'sensor_battery',
+    'modem_communication'
+]
+
+result = subprocess.run(['colcon', 'build', '--packages-select'] + packages)
