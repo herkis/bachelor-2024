@@ -2,7 +2,11 @@ import launch
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
-#Once the battery code is written re-add the code below
+# Declare Sample time as float
+sample_time = 2.0
+
+
+# Once the battery code is written re-add the code below
 
 def generate_launch_description():
     return LaunchDescription([
@@ -10,36 +14,42 @@ def generate_launch_description():
             package='sensor_oxygen',
             namespace='oxygen',
             executable='oxygen_publisher',
-            name='sensors'
+            name='sensors',
+            parameters=[{'sample_time': sample_time}]
         ),
         Node(
             package='sensor_thermometer',
             namespace='thermometer',
             executable='thermometer_publisher',
-            name='sensors'
+            name='sensors',
+            parameters=[{'sample_time': sample_time}]
         ),
         Node(
             package='sensor_barometer',
             namespace='barometer',
             executable='barometer_publisher',
-            name='sensors'
+            name='sensors',
+            parameters=[{'sample_time': sample_time}]
         ),
         Node(
             package='sensor_salinity',
             namespace='salinity',
             executable='salinity_publisher',
-            name='sensors'
+            name='sensors',
+            parameters=[{'sample_time': sample_time}]
         ),
         #Node(
         #    package='sensor_battery',
         #    namespace='battery',
         #    executable='battery_publisher',
-        #    name='sensors'
+        #    name='sensors',
+        #    parameters=[{'sample_time': sample_time}]
         #),
         Node(
             package='modem_communication',
-            namespace='modem',
+            namespace='subnero',
             executable='modem_subscriber',
-            name='modem'
+            name='modem',
+            parameters=[{'sample_time': sample_time}]
         ),
     ])
