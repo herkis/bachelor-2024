@@ -44,7 +44,7 @@ class BatteryDataPublisher(Node):
 
             # Gather 10 samples of pin voltage of the span of 5 seconds
             for i in range(10):
-                calibration_list.append(self.read_adc(A0, gain=GAIN))
+                calibration_list.append(self.sensor.read_adc(A0, gain=GAIN))
                 time.sleep(0.5)
                 #print(calibration_list)
 
