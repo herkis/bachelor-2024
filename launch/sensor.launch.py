@@ -38,13 +38,13 @@ def generate_launch_description():
             name='sensors',
             parameters=[{'sample_time': sample_time}]
         ),
-        #Node(
-        #    package='sensor_battery',
-        #    namespace='battery',
-        #    executable='battery_publisher',
-        #    name='sensors',
-        #    parameters=[{'sample_time': sample_time}]
-        #),
+        Node(
+            package='sensor_battery',
+            namespace='battery',
+            executable='battery_publisher',
+            name='sensors',
+            parameters=[{'sample_time': sample_time}]
+        ),
         Node(
             package='modem_communication',
             namespace='subnero',

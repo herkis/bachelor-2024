@@ -16,7 +16,7 @@ packages = [
     'sensor_barometer',
     'sensor_oxygen',
     'sensor_salinity',
-#    'sensor_battery',
+    'sensor_battery',
     'modem_communication'
 ]
 
