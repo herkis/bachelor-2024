@@ -26,28 +26,42 @@ class BatteryDataPublisher(Node):
         # Getting the mac address of the system
         msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
 
-        # Choose a gain of 1 for reading voltages from 0 to 4.09V.
-        # Or pick a different gain to change the range of voltages that are read:
-        #  - 2/3 = +/-6.144V
-        #  -   1 = +/-4.096V
-        #  -   2 = +/-2.048V
-        #  -   4 = +/-1.024V
-        #  -   8 = +/-0.512V
-        #  -  16 = +/-0.256V
-        # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
-        GAIN = 1
+        ## DEFINNING CONSTANTS
+        A0 = 0 #Channel 0 on ADC connected to voltage read pin
+        A1 = 1 #Channel 1 on ADC connected to current read pin
+        GAIN = 1 # 4.096V reference point
+        REFERENCE = 4.096 #Volt
+        RESOLUTION = 2**15 #Bits (the 16th-bit is sign reserved)
+        NOMINAL_BATTERY_VOLTAGE = 23.1 #Volt
+        VOLTAGE_OFFSET = 0.33 #Volt
+        CURRENT_SENSE = 37.8788 #Ampere / Volt
 
+        ## CALIBRATION
+        self.get_logger().info('ADC calibration in progress...')
+        calibration_list = []
+
+        # Gather 10 samples of pin voltage of the span of 5 seconds
+        for i in range(10):
+            calibration_list.append(self.read_adc(A0, gain=GAIN))
+            time.sleep(0.5)
+            #print(calibration_list)
+
+        # Calculating average bit value from coltage sense pin measured with A0 on the ADC
+        cal_value = sum(calibration_list) / len(calibration_list)
+        # Calculate the voltage from the calibration value
+        cal_voltage = cal_value*REFERENCE/RESOLUTION
+
+        # Main loop reads voltage and current from ADC and prints it every second
+        while True:
+            value = [self.sensor.read_adc(A0, gain=GAIN), self.sensor.read_adc(A1, gain=GAIN)]
+
+            V = (value[0]*REFERENCE/RESOLUTION) * (NOMINAL_BATTERY_VOLTAGE/cal_voltage)
+            I = (value[1]*REFERENCE/RESOLUTION - VOLTAGE_OFFSET) * CURRENT_SENSE
+
+            # print('V = %0.2f  I = %0.2f' % (V,I))
+
+            time.sleep(1)
         
-        # TODO:
-        # Get readings from ADS1115 and convert to proper values.(https://discuss.bluerobotics.com/t/need-help-connecting-the-power-sense-module-r2-to-a-arduino/4679)
-        # Compare these values to a graph of battery lifecycle to determine battery percentage. 
-        #if self.sensor.read():
-        adc_value0 = self.read_adc(0, gain=GAIN) #Reads the ADC-value on channel A0
-        adc_value1 = self.read_adc(1, gain=GAIN) #Reads the ADC-value on channel A1
-
-        I = (adc_value0*(5/1024)-0.33)*38.8788 #Lurer på om det skal være 1023 ikke 1024 siden det starter på 0 ikke 1
-        V = adc_value1*(5/1024)*11.0
-
         msg.battery_voltage = V
         msg.battery_current = I
         msg.battery_percent = 404.0
