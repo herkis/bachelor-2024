@@ -13,7 +13,7 @@ class BatteryDataPublisher(Node):
         self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
         self.timer = self.create_timer(self.sample_time, self.battery_read_and_publish)
 
-        self.sensor = ads1x15.ADS1x15()
+        self.sensor = ads1x15.ADS1115()
 
     def battery_read_and_publish(self):
         # Custom battery message to publish. Can be found in the sensor_interfaces.
@@ -37,30 +37,34 @@ class BatteryDataPublisher(Node):
         CURRENT_SENSE = 37.8788 #Ampere / Volt
 
         ## CALIBRATION
-        self.get_logger().info('ADC calibration in progress...')
-        calibration_list = []
+        calibration_flag = True
+        if calibration_flag:
+            self.get_logger().info('ADC calibration in progress...')
+            calibration_list = []
 
-        # Gather 10 samples of pin voltage of the span of 5 seconds
-        for i in range(10):
-            calibration_list.append(self.read_adc(A0, gain=GAIN))
-            time.sleep(0.5)
-            #print(calibration_list)
+            # Gather 10 samples of pin voltage of the span of 5 seconds
+            for i in range(10):
+                calibration_list.append(self.read_adc(A0, gain=GAIN))
+                time.sleep(0.5)
+                #print(calibration_list)
 
-        # Calculating average bit value from coltage sense pin measured with A0 on the ADC
-        cal_value = sum(calibration_list) / len(calibration_list)
-        # Calculate the voltage from the calibration value
-        cal_voltage = cal_value*REFERENCE/RESOLUTION
+            # Calculating average bit value from coltage sense pin measured with A0 on the ADC
+            cal_value = sum(calibration_list) / len(calibration_list)
+            # Calculate the voltage from the calibration value
+            cal_voltage = cal_value*REFERENCE/RESOLUTION
+            # Lowering calibration flag after calibration is done
+            calibration_flag = False
 
-        # Main loop reads voltage and current from ADC and prints it every second
-        while True:
-            value = [self.sensor.read_adc(A0, gain=GAIN), self.sensor.read_adc(A1, gain=GAIN)]
+        # Reads voltage and current from ADC and prints it every second
+        
+        value = [self.sensor.read_adc(A0, gain=GAIN), self.sensor.read_adc(A1, gain=GAIN)]
 
-            V = (value[0]*REFERENCE/RESOLUTION) * (NOMINAL_BATTERY_VOLTAGE/cal_voltage)
-            I = (value[1]*REFERENCE/RESOLUTION - VOLTAGE_OFFSET) * CURRENT_SENSE
+        V = (value[0]*REFERENCE/RESOLUTION) * (NOMINAL_BATTERY_VOLTAGE/cal_voltage)
+        I = (value[1]*REFERENCE/RESOLUTION - VOLTAGE_OFFSET) * CURRENT_SENSE
 
-            # print('V = %0.2f  I = %0.2f' % (V,I))
+        # print('V = %0.2f  I = %0.2f' % (V,I))
 
-            time.sleep(1)
+        time.sleep(1)
         
         msg.battery_voltage = V
         msg.battery_current = I
