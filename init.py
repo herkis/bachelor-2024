@@ -20,4 +20,4 @@ packages = [
     'modem_communication'
 ]
 
-result = subprocess.run(['colcon', 'build', '--packages-select'] + packages)
+subprocess.run(['colcon', 'build', '--symlink-install', '--packages-select'] + packages)
