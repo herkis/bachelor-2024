@@ -31,6 +31,13 @@ class ModemSubscriberNode(Node):
             'time': '00:00',
             'temperature': 0.0
         }
+        self.subscribers_updated = {
+            'barometer_data' : False,
+            'battery_data' : False,
+            'oxygen_data' : False,
+            'salinity_data' : False,
+            'temperature_data' : False
+        }
 
         self.barometer_subscription = self.create_subscription(
             Barometer, 
@@ -69,6 +76,23 @@ class ModemSubscriberNode(Node):
         self.salinity_subscription   # Prevent unused variable warning
         self.temperature_subscription   # Prevent unused variable warning
 
+    def send_data_modem(self):
+        #self.get_logger().info('sender was here')
+        all_updated = True
+        for topic, updated in self.subscribers_updated.items():
+            if not updated:
+                all_updated = False
+                break
+        if all_updated:
+            self.get_logger().info('SENDING DATA TO MODEM')
+            # Actually send data to modem 
+            #   s = UnetSocket('<IP>', 1100)
+            #   s.send('hello underwater', 0)
+            #   s.close()
+
+            for topic in self.subscribers_updated:
+                self.subscribers_updated[topic] = False
+
     def barometer_callback(self, msg:Barometer):
         self.barometer_data['pressure'] = msg.pressure_mbar
         self.barometer_data['depth'] = msg.depth
@@ -76,6 +100,8 @@ class ModemSubscriberNode(Node):
         self.get_logger().info('Extracted %0.2f mbar at depth %0.2f  time: %s'% (self.barometer_data['pressure'], 
                                                                                  self.barometer_data['depth'], 
                                                                                  self.barometer_data['time']))
+        self.subscribers_updated['barometer_data'] = True
+        self.send_data_modem()
 
     def battery_callback (self, msg:Battery):
         self.battery_data['voltage'] = msg.battery_voltage
@@ -86,24 +112,32 @@ class ModemSubscriberNode(Node):
                                                                                          self.battery_data['current'], 
                                                                                          self.battery_data['percent'], 
                                                                                          self.battery_data['time']))
+        self.subscribers_updated['battery_data'] = True
+        self.send_data_modem()
  
     def oxygen_callback(self, msg:Oxygen):
         self.oxygen_data['oxygen'] = msg._oxygen_concentration
         self.oxygen_data['time'] = msg.local_time
         self.get_logger().info('Extracted %0.2f O at time: %s'% (self.oxygen_data['oxygen'], 
                                                                  self.oxygen_data['time']))
+        self.subscribers_updated['oxygen_data'] = True
+        self.send_data_modem()
  
     def salinity_callback(self, msg:Salinity):
         self.salinity_data['salinity'] = msg.salinity_value
         self.salinity_data['time'] = msg.local_time
         self.get_logger().info('Extracted %0.2f O at time: %s'% (self.salinity_data['salinity'], 
                                                                  self.salinity_data['time']))
+        self.subscribers_updated['salinity_data'] = True
+        self.send_data_modem()
  
     def temperature_callback(self, msg:Thermometer):
         self.temperature_data['temperature'] = msg.temperature_celsius
         self.temperature_data['time'] = msg.local_time
         self.get_logger().info('Extracted %0.2f C at time: %s'% (self.temperature_data['temperature'], 
                                                                  self.temperature_data['time']))
+        self.subscribers_updated['thermometer_data'] = True
+        self.send_data_modem()
         
 
 def main(args=None):
