@@ -62,7 +62,6 @@ class BatteryDataPublisher(Node):
         V = value[0]*self.voltage_constant
         I = value[1]*self.current_constant
         # print('V = %0.2f  I = %0.2f' % (V,I))
-        time.sleep(1)
         
         msg.battery_voltage = V
         msg.battery_current = I
