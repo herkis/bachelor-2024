@@ -19,7 +19,7 @@ class ThermometerDataPublisher(Node):
         self.sensor = tsys01.TSYS01()
         if not self.sensor.init():
             # If sensor can not be detected
-            print("Sensor could not be initialized")
+            self.get_logger().error("Sensor could not be initialized")
             exit(1)
 
     def thermometer_read_and_publish(self):

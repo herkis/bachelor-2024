@@ -16,7 +16,7 @@ class OxygenDataPublisher(Node):
 
         self.sensor = doatlas01.DOATLAS01()
         # if not self.sensor.init():                                                                             ## CHANGE
-        #     print("Sensor could not be initialized")
+        #     self.get_logger().error("Sensor could not be initialized")
         #     exit(1)
 
     def oxygen_read_and_publish(self):

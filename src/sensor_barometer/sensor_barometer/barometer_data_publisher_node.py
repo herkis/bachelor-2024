@@ -18,7 +18,7 @@ class BarometerDataPublisher(Node):
         # self.sensor.setFluidDensity() # Configuring fluid density for fresh or saltwater. Defaulting to fresh water
         if not self.sensor.init():
             # If sensor can not be detected
-            print("Sensor could not be initialized")
+            self.get_logger().error("Sensor could not be initialized")
             exit(1)
 
     def barometer_read_and_publish(self):
