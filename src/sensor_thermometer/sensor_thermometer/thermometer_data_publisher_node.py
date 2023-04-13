@@ -38,7 +38,7 @@ class ThermometerDataPublisher(Node):
                 msg.temperature_celsius     = self.sensor.temperature()                         # Default is degrees C (no arguments)
                 msg.temperature_farenheit   = self.sensor.temperature(tsys01.UNITS_Farenheit)   # Request Farenheit
         else:
-                print("Sensor read failed!")
+                self.get_logger().error("Sensor read failed!")
                 exit(1)
 
         # Publishing message and logging data sent over the topic /thermometer_data

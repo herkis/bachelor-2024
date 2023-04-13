@@ -34,7 +34,7 @@ class OxygenDataPublisher(Node):
         if self.sensor.read():
                 msg.oxygen_concentration     = self.sensor._oxygen
         else:
-                print("Sensor read failed!")
+                self.get_logger().error("Sensor read failed!")
                 exit(1)
 
         # Publishing message and logging data sent over the topic /oxygen_data

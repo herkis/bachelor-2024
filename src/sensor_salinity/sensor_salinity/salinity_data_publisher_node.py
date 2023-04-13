@@ -34,7 +34,7 @@ class SalinityDataPublisher(Node):
         if self.sensor.read():
                 msg.salinity_value     = self.sensor._salinity
         else:
-                print("Sensor read failed!")
+                self.get_logger().error("Sensor read failed!")
                 exit(1)
 
         # Publishing message and logging data sent over the topic /salinity_data

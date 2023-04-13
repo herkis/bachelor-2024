@@ -39,7 +39,7 @@ class BarometerDataPublisher(Node):
                 msg.pressure_mbar           = self.sensor.pressure()                            # Default is mbar (no arguments)
                 msg.pressure_psi            = self.sensor.pressure(ms5837.UNITS_psi)            # Request psi
         else:
-                print("Sensor read failed!")
+                self.get_logger().error("Sensor read failed!")
                 exit(1)
 
         # Publishing message and logging data sent over the topic /barometer_data
