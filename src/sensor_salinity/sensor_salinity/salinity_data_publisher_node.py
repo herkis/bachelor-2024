@@ -43,5 +43,5 @@ class SalinityDataPublisher(Node):
         #                                                        msg.salinity_value,
         #                                                        msg.local_time))
         
-        self.get_logger().info('\ttime: %s  O: %0.2f µs/cm' % (msg.local_time,
+        self.get_logger().info('\ttime: %s  S: %0.2f µs/cm' % (msg.local_time,
                                                                 msg.salinity_value))
