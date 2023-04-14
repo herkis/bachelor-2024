@@ -71,8 +71,11 @@ class BatteryDataPublisher(Node):
         #    exit(1)
 
         self.publisher_.publish(msg)
-        self.get_logger().info('Mac: %s  Percent: %0.2f  V: %0.2f  I: %0.2f  %s' % (msg.mac,
-                                                                                      msg.battery_percent,
-                                                                                      msg.battery_voltage,
-                                                                                      msg.battery_current,
-                                                                                      msg.local_time))
+        #self.get_logger().info('Mac: %s  Percent: %0.2f  V: %0.2f  I: %0.2f  %s' % (msg.mac,
+        #                                                                              msg.battery_percent,
+        #                                                                              msg.battery_voltage,
+        #                                                                              msg.battery_current,
+        #                                                                              msg.local_time))
+        self.get_logger().info('time: %s  V: %0.2f  I: %0.2f' % (msg.local_time,
+                                                                 msg.battery_voltage,
+                                                                 msg.battery_current))
