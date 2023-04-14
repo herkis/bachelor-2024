@@ -3,7 +3,7 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 
 # Declare Sample time as float
-sample_time = 2.0
+sample_time = 10.0
 n_sensors = 5
 
 
