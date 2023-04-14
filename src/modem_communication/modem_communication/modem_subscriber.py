@@ -1,13 +1,19 @@
 import rclpy
 from rclpy.node import Node
 from sensor_interfaces.msg import *
+from unetpy import UnetSocket
+
 
 class ModemSubscriberNode(Node):
     
     def __init__(self):
         super().__init__('modem_subscriber')
+        self.modem  = UnetSocket('192.168.42.86', 1100)
 
-        #defining variables
+        self.times_checked = 0
+        self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # gets how many sensors it is expecting values from
+
+        # Defining memory variables
         self.barometer_data = {
             'time': '00:00',
             'depth': 0.0,
@@ -78,17 +84,24 @@ class ModemSubscriberNode(Node):
 
     def send_data_modem(self):
         #self.get_logger().info('sender was here')
+        self.times_checked += 1
+        if self.times_checked >= self.n_sensors: # 4 sensors?
+            self.get_logger().warning('SOME SENSORS NOT WORKING')
+            string = str(self.barometer_data['depth']) + ', ' + str(self.oxygen_data['oxygen']) + ', ' +str(self.salinity_data['salinity']) + ', ' + str(self.temperature_data['temperature'])
+            self.modem.send(string, 0)
+            self.get_logger().info('DATA SENT TO MODEM: %s' % string)
+            self.times_checked = 0
+            return
         all_updated = True
         for topic, updated in self.subscribers_updated.items():
             if not updated:
                 all_updated = False
                 break
         if all_updated:
-            self.get_logger().info('SENDING DATA TO MODEM')
-            # Actually send data to modem 
-            #   s = UnetSocket('<IP>', 1100)
-            #   s.send('hello underwater', 0)
-            #   s.close()
+            self.get_logger().info('DATA SENT TO MODEM')
+            string = str(self.barometer_data['depth']) + ', ' + str(self.oxygen_data['oxygen']) + ', ' +str(self.salinity_data['salinity']) + ', ' + str(self.temperature_data['temperature'])
+            self.modem.send(string, 0)
+            self.times_checked = 0
 
             for topic in self.subscribers_updated:
                 self.subscribers_updated[topic] = False
