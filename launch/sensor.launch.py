@@ -4,9 +4,8 @@ from launch_ros.actions import Node
 
 # Declare Sample time as float
 sample_time = 2.0
+n_sensors = 5
 
-
-# Once the battery code is written re-add the code below
 
 def generate_launch_description():
     return LaunchDescription([
@@ -50,6 +49,6 @@ def generate_launch_description():
             namespace='subnero',
             executable='modem_subscriber',
             name='modem',
-            parameters=[{'sample_time': sample_time}]
+            parameters=[{'sensor_count': n_sensors}]
         ),
     ])
