@@ -5,6 +5,7 @@ from launch_ros.actions import Node
 # Declare Sample time as float
 sample_time = 10.0
 n_sensors = 5
+rigg_ID = 1
 
 
 def generate_launch_description():
@@ -49,6 +50,8 @@ def generate_launch_description():
             namespace='subnero',
             executable='modem_subscriber',
             name='modem',
-            parameters=[{'sensor_count': n_sensors}]
+            parameters=[{'sensor_count': n_sensors},
+                        {'rigg_ID': rigg_ID}
+            ]
         ),
     ])
