@@ -35,7 +35,7 @@ class BatteryDataPublisher(Node):
             time.sleep(0.5)
             #print(calibration_list)
 
-        # Calculating average bit value from coltage sense pin measured with A0 on the ADC
+        # Calculating average bit value from voltage sense pin measured with A0 on the ADC
         cal_value = sum(calibration_list) / len(calibration_list)
         # Calculate the voltage from the calibration value
         self.cal_voltage = cal_value*self.REFERENCE/self.RESOLUTION
@@ -49,15 +49,15 @@ class BatteryDataPublisher(Node):
         # Custom battery message to publish. Can be found in the sensor_interfaces.
         msg = Battery()
        
-        # Getting the local time
-        tim = time.localtime()
-        msg.local_time =  time.strftime("%H:%M",tim)
-
+        # Getting the local time 
+        current_time = time.localtime()
+        msg.local_time =  time.strftime("%H:%M:%S",current_time)
         # Getting the mac address of the system
         msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
 
         # Reads voltage and current from ADC and prints it every second
-        value = [self.sensor.read_adc(self.A0, gain=self.GAIN), self.sensor.read_adc(self.A1, gain=self.GAIN)]
+        value = [self.sensor.read_adc(self.A0, gain=self.GAIN), 
+                 self.sensor.read_adc(self.A1, gain=self.GAIN)]
 
         V = value[0]*self.voltage_constant
         I = value[1]*self.current_constant
@@ -77,5 +77,5 @@ class BatteryDataPublisher(Node):
         #                                                                              msg.battery_current,
         #                                                                              msg.local_time))
         self.get_logger().info('\t\ttime: %s  V: %0.2f  I: %0.2f' % (msg.local_time,
-                                                                 msg.battery_voltage,
-                                                                 msg.battery_current))
+                                                                     msg.battery_voltage,
+                                                                     msg.battery_current))

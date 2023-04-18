@@ -23,9 +23,9 @@ class SalinityDataPublisher(Node):
         # Custom conductivity message to publish. Can be found in the brov2_interfaces.
         msg = Salinity()
 
-        # Adding a way to read the time 
-        tim = time.localtime()
-        msg.local_time =  time.strftime("%H:%M",tim)
+        # Getting the local time 
+        current_time = time.localtime()
+        msg.local_time =  time.strftime("%H:%M:%S",current_time)
 
         # Getting the mac address of the system
         msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))

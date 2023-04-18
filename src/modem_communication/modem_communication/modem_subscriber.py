@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from sensor_interfaces.msg import *
 from unetpy import UnetSocket
+import time
 
 
 class ModemSubscriberNode(Node):
@@ -12,7 +13,8 @@ class ModemSubscriberNode(Node):
 
 
         self.times_checked = 0
-        self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # gets how many sensors it is expecting values from
+        self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # Gets how many sensors it is expecting values from
+        self.rigg_ID  = self.declare_parameter('rigg_ID', 1).value  # Gets Identification number for the rigg
 
         # Defining memory variables
         self.barometer_data = {
@@ -75,16 +77,24 @@ class ModemSubscriberNode(Node):
         self.oxygen_subscription   # Prevent unused variable warning
         self.salinity_subscription   # Prevent unused variable warning
         self.temperature_subscription   # Prevent unused variable warning
-        
+
 
     def send_data_modem(self):
         if self.times_checked >= self.n_sensors:
-            data = '%s, %0.4f, %0.4f, %0.4f, %0.4f, %0.4f' % (self.barometer_data['time'],
-                                                              self.barometer_data['depth'],
-                                                              self.battery_data['voltage'],
-                                                              self.oxygen_data['oxygen'],
-                                                              self.salinity_data['salinity'],
-                                                              self.temperature_data['temperature'])
+            # Getting the local time
+            current_time = time.localtime()
+            msg.local_time =  time.strftime("%H:%M:%S",current_time)
+            data = '%i,%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (self.rigg_ID,
+                                                            current_time,
+                                                            self.barometer_data['depth'],
+                                                            self.battery_data['voltage'],
+                                                            self.oxygen_data['oxygen'],
+                                                            self.salinity_data['salinity'],
+                                                            self.temperature_data['temperature'])
+# Testing Current sens            
+#            data = '%s,%0.4f,%0.4f' % (current_time,
+#                                         self.battery_data['voltage'],
+#                                         self.battery_data['current'])
             
             try:
                 self.sock.send(data, 0)

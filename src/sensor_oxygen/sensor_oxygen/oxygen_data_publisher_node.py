@@ -23,10 +23,9 @@ class OxygenDataPublisher(Node):
         # Custom dissolved oxygen message to publish. Can be found in the brov2_interfaces.
         msg = Oxygen()
         
-        # Getting the local time
-        tim = time.localtime()
-        msg.local_time =  time.strftime("%H:%M",tim)
-
+        # Getting the local time 
+        current_time = time.localtime()
+        msg.local_time =  time.strftime("%H:%M:%S",current_time)
         # Getting the mac address of the system
         msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
 
