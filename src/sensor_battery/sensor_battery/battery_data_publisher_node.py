@@ -12,10 +12,12 @@ class BatteryDataPublisher(Node):
     A1 = 1 #Channel 1 on ADC connected to current read pin
     GAIN = 1 # 4.096V reference point
     REFERENCE = 4.096 #Volt
-    RESOLUTION = 2**15 #Bits (the 16th-bit is sign reserved)
+    MAX_VALUE = 2**15 #Bits (the 16th-bit is sign reserved)
     NOMINAL_BATTERY_VOLTAGE = 22.2 #Volt (6S lipo battery nominal voltage)
     VOLTAGE_OFFSET = 0.33 #Volt
     CURRENT_SENSE = 37.8788 #Ampere / Volt
+    MIN_BATTERY_VOLATAGE = 19.2 #Volt
+    MAX_BATTERY_VOLTAGE = 25.2 #Volt
 
     # Initialize
     def __init__(self):
@@ -38,10 +40,10 @@ class BatteryDataPublisher(Node):
         # Calculating average bit value from voltage sense pin measured with A0 on the ADC
         cal_value = sum(calibration_list) / len(calibration_list)
         # Calculate the voltage from the calibration value
-        self.cal_voltage = cal_value*self.REFERENCE/self.RESOLUTION
+        self.cal_voltage = cal_value*self.REFERENCE/self.MAX_VALUE
         # Calculate the voltage and current constants
-        self.voltage_constant = (self.REFERENCE/self.RESOLUTION) * (self.NOMINAL_BATTERY_VOLTAGE/self.cal_voltage)
-        self.current_constant = (self.REFERENCE/self.RESOLUTION - self.VOLTAGE_OFFSET) * self.CURRENT_SENSE
+        self.voltage_constant = (self.REFERENCE/self.MAX_VALUE) * (self.NOMINAL_BATTERY_VOLTAGE/self.cal_voltage)
+        self.current_constant = (self.REFERENCE/self.MAX_VALUE - self.VOLTAGE_OFFSET) * self.CURRENT_SENSE
         self.get_logger().info('ADC calibration done!')
         
 
@@ -61,11 +63,11 @@ class BatteryDataPublisher(Node):
 
         V = value[0]*self.voltage_constant
         I = value[1]*self.current_constant
-        # print('V = %0.2f  I = %0.2f' % (V,I))
+        percent = 100/(self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE)*V-320
         
         msg.battery_voltage = V
         msg.battery_current = I
-        msg.battery_percent = 404.0
+        msg.battery_percent = percent
         #else:
         #    print("Sensor read failed!")
         #    exit(1)
@@ -76,6 +78,6 @@ class BatteryDataPublisher(Node):
         #                                                                              msg.battery_voltage,
         #                                                                              msg.battery_current,
         #                                                                              msg.local_time))
-        self.get_logger().info('\t\ttime: %s  V: %0.2f  I: %0.2f' % (msg.local_time,
+        self.get_logger().info('\t\ttime: %s  V: %0.2f  %: %0.0f' % (msg.local_time,
                                                                      msg.battery_voltage,
-                                                                     msg.battery_current))
+                                                                     msg.battery_percent))
