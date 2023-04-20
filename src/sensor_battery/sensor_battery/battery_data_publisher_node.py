@@ -13,7 +13,7 @@ class BatteryDataPublisher(Node):
     GAIN = 1 # 4.096V reference point
     REFERENCE = 4.096 #Volt
     MAX_VALUE = 2**15 #Bits (the 16th-bit is sign reserved)
-    NOMINAL_BATTERY_VOLTAGE = 22.2 #Volt (6S lipo battery nominal voltage)
+    NOMINAL_BATTERY_VOLTAGE = 22.54 #Volt (6S lipo battery nominal voltage)
     VOLTAGE_OFFSET = 0.33 #Volt
     CURRENT_SENSE = 37.8788 #Ampere / Volt
     MIN_BATTERY_VOLATAGE = 19.2 #Volt
