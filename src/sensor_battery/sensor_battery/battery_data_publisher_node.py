@@ -78,6 +78,6 @@ class BatteryDataPublisher(Node):
         #                                                                              msg.battery_voltage,
         #                                                                              msg.battery_current,
         #                                                                              msg.local_time))
-        self.get_logger().info('\t\ttime: %s  V: %0.2f  %: %d' % (msg.local_time,
+        self.get_logger().info('\t\ttime: %s  V: %0.2f  %%: %d' % (msg.local_time,
                                                                      msg.battery_voltage,
                                                                      msg.battery_percent))
