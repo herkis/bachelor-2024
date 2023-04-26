@@ -21,7 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "modem_subscriber = modem_communication.modem_subscriber:main"
+            'modem_subscriber = modem_communication.modem_subscriber:main'
         ],
     },
 )

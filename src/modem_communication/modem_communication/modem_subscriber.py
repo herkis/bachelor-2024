@@ -12,9 +12,10 @@ class ModemSubscriberNode(Node):
         self.sock  = UnetSocket('192.168.42.195', 1100)
 
 
+        self.publisher_ = self.create_publisher(Modem, 'internal_modem_data', 10)  # Creates a publisher over the topic salinity_data
         self.times_checked = 0
         self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # Gets how many sensors it is expecting values from
-        self.rigg_ID  = self.declare_parameter('rigg_ID', 1).value  # Gets Identification number for the rigg
+        #self.rigg_ID  = self.declare_parameter('rigg_ID', 1).value  # Gets Identification number for the rigg
 
         # Defining memory variables
         self.barometer_data = {
@@ -83,18 +84,18 @@ class ModemSubscriberNode(Node):
         if self.times_checked >= self.n_sensors:
             # Getting the local time
             current_time = time.localtime()
-            msg.local_time =  time.strftime("%H:%M:%S",current_time)
-            data = '%i,%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (self.rigg_ID,
-                                                            current_time,
-                                                            self.barometer_data['depth'],
-                                                            self.battery_data['voltage'],
-                                                            self.oxygen_data['oxygen'],
-                                                            self.salinity_data['salinity'],
-                                                            self.temperature_data['temperature'])
-# Testing Current sens            
-#            data = '%s,%0.4f,%0.4f' % (current_time,
-#                                         self.battery_data['voltage'],
-#                                         self.battery_data['current'])
+            #msg.local_time =  time.strftime("%H:%M:%S",current_time) ## Does  not do anything?
+            # data = '%i,%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (self.rigg_ID, # Handeled by modem
+            data = '%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (current_time,
+                                                         self.barometer_data['depth'],
+                                                         self.battery_data['voltage'],
+                                                         self.oxygen_data['oxygen'],
+                                                         self.salinity_data['salinity'],
+                                                         self.temperature_data['temperature'])
+            
+            modem_msg = Modem()
+            modem_msg.internal_data = data
+            self.publisher_.publish(modem_msg)
             
             try:
                 self.sock.send(data, 0)
