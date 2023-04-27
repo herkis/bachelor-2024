@@ -13,7 +13,6 @@ class BatteryDataPublisher(Node):
     GAIN = 1 # 4.096V reference point
     REFERENCE = 4.096 #Volt
     MAX_VALUE = 2**15 #Bits (the 16th-bit is sign reserved)
-    NOMINAL_BATTERY_VOLTAGE = 22.54 #Volt (6S lipo battery nominal voltage)
     VOLTAGE_OFFSET = 0.33 #Volt
     CURRENT_SENSE = 37.8788 #Ampere / Volt
     MIN_BATTERY_VOLATAGE = 19.2 #Volt
@@ -27,24 +26,10 @@ class BatteryDataPublisher(Node):
         self.timer = self.create_timer(self.sample_time, self.battery_read_and_publish)
 
         self.sensor = ads1x15.ADS1115()
-        ## CALIBRATION
-        self.get_logger().info('ADC calibration in progress...')
-        calibration_list = []
-
-        # Gather 10 samples of pin voltage of the span of 5 seconds
-        for i in range(10):
-            calibration_list.append(self.sensor.read_adc(self.A0, gain=self.GAIN))
-            time.sleep(0.5)
-            #print(calibration_list)
-
-        # Calculating average bit value from voltage sense pin measured with A0 on the ADC
-        cal_value = sum(calibration_list) / len(calibration_list)
-        # Calculate the voltage from the calibration value
-        self.cal_voltage = cal_value*self.REFERENCE/self.MAX_VALUE
+        
         # Calculate the voltage and current constants
-        self.voltage_constant = (self.REFERENCE/self.MAX_VALUE) * (self.NOMINAL_BATTERY_VOLTAGE/self.cal_voltage)
+        self.voltage_constant = (self.REFERENCE/self.MAX_VALUE)*11 
         self.current_constant = (self.REFERENCE/self.MAX_VALUE - self.VOLTAGE_OFFSET) * self.CURRENT_SENSE
-        self.get_logger().info('ADC calibration done!')
         
 
     def battery_read_and_publish(self):
@@ -61,7 +46,7 @@ class BatteryDataPublisher(Node):
         value = [self.sensor.read_adc(self.A0, gain=self.GAIN), 
                  self.sensor.read_adc(self.A1, gain=self.GAIN)]
 
-        V = value[0]*self.voltage_constant
+        V = value[0]*self.voltage_constant + 0.6 #adding 0.6 because it works
         I = value[1]*self.current_constant
         percent = 100/(self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE)*V-320
         
