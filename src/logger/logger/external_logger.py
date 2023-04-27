@@ -6,12 +6,13 @@ import csv
 
 
 class ExternalLoggerNode(Node):
-    
+
     def __init__(self):
         super().__init__('external_logger')
 
         current_datetime = datetime.datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
-        self.file = "external_logger_" + current_datetime + '.csv'
+        directory = 'log_data/external/'
+        self.file = directory + 'external_log_' + current_datetime + '.csv'
         header = 'Modem_ID,Time,Depth,Voltage,Oxygen,Salinity,Temerature'
 
         with open(self.file, 'w', newline='') as csv_file:
