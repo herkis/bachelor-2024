@@ -91,7 +91,7 @@ class ModemSubscriberNode(Node):
         if self.times_checked >= self.n_sensors:
             # Getting the local time
             current_time = time.localtime()
-            local_time =  time.strftime("%H:%M:%S",current_time) ## Does  not do anything?
+            local_time =  time.strftime("%H:%M:%S",current_time)
             # data = '%i,%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (self.rigg_ID, # Handeled by modem
             data = '%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (local_time,
                                                          self.barometer_data['depth'],
@@ -113,7 +113,7 @@ class ModemSubscriberNode(Node):
                 self.get_logger().error('COULD NOT SEND DATA TO MODEM')
             self.times_checked = 0
 
-            if (time.time() - self.start_time) > self.transfer_delay:
+            while (time.time() - self.start_time) > self.transfer_delay:
                 self.get_logger().info('Listening')
                 self.sock.setTimeout(self.sample_time - self.transfer_delay)
                 rx = self.sock.receive()
