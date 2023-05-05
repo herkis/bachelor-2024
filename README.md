@@ -1,7 +1,7 @@
 # Standalone Underwater Monitoring Station
 
 Sensor-drivers and connection to ROS2 architecture [ROS2 Humble](https://docs.ros.org/en/ros2_documentation/humble/index.html).
-<!-- Sensor-drivers and connection to ROS2 architecture [ROS2 Galactic](https://docs.ros.org/en/ros2_documentation/galactic/index.html). -->
+
 
 This is a continuation of two previous groups code for developing sensors to work underwater both with and without the BlueRobotics BlueROV-2.
 
