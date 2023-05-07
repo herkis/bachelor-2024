@@ -13,12 +13,8 @@ Link to the second original code: https://github.com/JoJoHTM/Sensors_drivers_BRO
 For a quick use, paste these commands
 More details for each command come after
 
-	mkdir test_ws
-	cd test_ws/
 	git clone https://github.com/Pederbs/SUMS
-	sudo mv -v SUMS/src/* src/
-	sudo rm -r SUMS/src/
-	sudo mv -v SUMS/*  .
+
 	python3 init.py
 	. install/setup.bash
 	ros2 launch launch/sensor.launch.py
@@ -27,12 +23,6 @@ Go in the dev_ws/ folder
 Import all the files with the command
 
 	git clone https://github.com/Pederbs/SUMS
-
-Move the content of the src file if you already have one in the folder
-
-	sudo mv -v SUMS/src/* src/
-	sudo rm -r SUMS/src/
-	sudo mv -v SUMS/*  .
 
 Build all the packages with init.py
 
@@ -48,9 +38,9 @@ Launch the publishers
 
 
 
-To remove all of the files, go in dev_ws/ and paste this command
+To remove all of the files, go in the parent folder and paste this command
 
-	sudo rm -r launch/ src/sensor_* README.md LICENSE SUMS/
+	sudo rm -r SUMS
 	
 ## Documentation on code
 
