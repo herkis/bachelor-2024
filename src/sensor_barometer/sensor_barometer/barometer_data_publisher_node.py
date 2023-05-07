@@ -4,7 +4,6 @@ from rclpy.node import Node
 from sensor_barometer import ms5837
 from sensor_interfaces.msg import Barometer
 import time
-import  re, uuid
 
 class BarometerDataPublisher(Node):
     # Initializer 
@@ -29,9 +28,6 @@ class BarometerDataPublisher(Node):
         current_time = time.localtime()
         msg.local_time =  time.strftime("%H:%M:%S",current_time)
 
-        # Getting the mac address of the system
-        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
-
 
         # Reading barometer and loading data into custom message
         if self.sensor.read():
@@ -44,13 +40,6 @@ class BarometerDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /barometer_data
         self.publisher_.publish(msg)
-
-        #self.get_logger().info('Mac: %s  Depth: %0.2f m  P: %0.1f mbar  %0.3f psi  %s' % (msg.mac,
-        #                                                                                  msg.depth, 
-        #                                                                                  msg.pressure_mbar, 
-        #                                                                                  msg.pressure_psi,
-        #                                                                                  msg.local_time))
-
         self.get_logger().info('\ttime: %s  Depth: %0.2f m  P: %0.1f mbar' % (msg.local_time,
                                                                             msg.depth, 
                                                                             msg.pressure_mbar))

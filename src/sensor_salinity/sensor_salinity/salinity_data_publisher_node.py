@@ -4,7 +4,6 @@ from rclpy.node import Node
 from sensor_salinity import catlas01
 from sensor_interfaces.msg import Salinity
 import time
-import re, uuid
 
 class SalinityDataPublisher(Node):
     # Initializer 
@@ -27,9 +26,6 @@ class SalinityDataPublisher(Node):
         current_time = time.localtime()
         msg.local_time =  time.strftime("%H:%M:%S",current_time)
 
-        # Getting the mac address of the system
-        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
-
         # Reading salinity and loading data into custom message
         if self.sensor.read():
                 msg.salinity_value     = self.sensor._salinity
@@ -39,9 +35,5 @@ class SalinityDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /salinity_data
         self.publisher_.publish(msg)
-        #self.get_logger().info('Mac: %s  O: %0.2f µs/cm  %s' % (msg.mac,
-        #                                                        msg.salinity_value,
-        #                                                        msg.local_time))
-        
         self.get_logger().info('\ttime: %s  S: %0.2f µs/cm' % (msg.local_time,
                                                                 msg.salinity_value))

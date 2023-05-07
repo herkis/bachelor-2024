@@ -13,10 +13,9 @@ class ThermometerDataSubscriber(Node):
         self.subscription   # Prevent unused variable warning
 
     def listener_callback(self, msg):
-        self.get_logger().info('Mac: %s  T: %0.2f C  %0.2f F  %s' % (msg.mac,
-                                                                     msg.temperature_celsius, 
-                                                                     msg.temperature_farenheit,
-                                                                     msg.local_time))
+        self.get_logger().info('T: %0.2f C  %0.2f F  %s' % (msg.temperature_celsius, 
+                                                            msg.temperature_farenheit,
+                                                            msg.local_time))
 
 def main(args=None):
     rclpy.init(args=args)

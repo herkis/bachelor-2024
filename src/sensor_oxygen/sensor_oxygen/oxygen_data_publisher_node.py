@@ -4,7 +4,6 @@ from rclpy.node import Node
 from sensor_oxygen import doatlas01
 from sensor_interfaces.msg import Oxygen
 import time
-import  re, uuid
 
 class OxygenDataPublisher(Node):
     # Initializer 
@@ -26,8 +25,6 @@ class OxygenDataPublisher(Node):
         # Getting the local time 
         current_time = time.localtime()
         msg.local_time =  time.strftime("%H:%M:%S",current_time)
-        # Getting the mac address of the system
-        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
 
         # Reading dissolved oxygen and loading data into custom message
         if self.sensor.read():
@@ -38,9 +35,5 @@ class OxygenDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /oxygen_data
         self.publisher_.publish(msg)
-        #self.get_logger().info('Mac: %s  O: %0.2f mg/L  %s' % (msg.mac,
-        #                                                       msg.oxygen_concentration,
-        #                                                       msg.local_time))
-        
         self.get_logger().info('\t\ttime: %s  O: %0.2f mg/L' % (msg.local_time,
                                                             msg.oxygen_concentration))

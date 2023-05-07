@@ -3,7 +3,6 @@ from rclpy.node import Node
 from sensor_battery import ads1x15
 from sensor_interfaces.msg import Battery
 import time
-import  re, uuid
 
 
 class BatteryDataPublisher(Node):
@@ -39,14 +38,12 @@ class BatteryDataPublisher(Node):
         # Getting the local time 
         current_time = time.localtime()
         msg.local_time =  time.strftime("%H:%M:%S",current_time)
-        # Getting the mac address of the system
-        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
 
         # Reads voltage and current from ADC and prints it every second
         value = [self.sensor.read_adc(self.A0, gain=self.GAIN), 
                  self.sensor.read_adc(self.A1, gain=self.GAIN)]
 
-        V = value[0]*self.voltage_constant + 0.6 #adding 0.6 because it works
+        V = value[0]*self.voltage_constant + 0.6 # Adding 0.6 because it works
         I = value[1]*self.current_constant
         percent = 100/(self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE)*V-320
         
@@ -58,11 +55,6 @@ class BatteryDataPublisher(Node):
         #    exit(1)
 
         self.publisher_.publish(msg)
-        #self.get_logger().info('Mac: %s  Percent: %0.2f  V: %0.2f  I: %0.2f  %s' % (msg.mac,
-        #                                                                              msg.battery_percent,
-        #                                                                              msg.battery_voltage,
-        #                                                                              msg.battery_current,
-        #                                                                              msg.local_time))
         self.get_logger().info('\t\ttime: %s  V: %0.2f  %%: %d' % (msg.local_time,
                                                                      msg.battery_voltage,
                                                                      msg.battery_percent))

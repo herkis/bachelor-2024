@@ -5,7 +5,6 @@ from rclpy.node import Node
 from sensor_thermometer import tsys01
 from sensor_interfaces.msg import Thermometer
 import time
-import  re, uuid        # Used for getting the mac address 
 
 class ThermometerDataPublisher(Node):
     # Initializer 
@@ -30,9 +29,6 @@ class ThermometerDataPublisher(Node):
         current_time = time.localtime()
         msg.local_time =  time.strftime("%H:%M:%S",current_time)
 
-        # Getting the mac address of the system:
-        msg.mac = ':'.join(re.findall('..','%012x' % uuid.getnode()))
-
         # Calls the function sensor.read in TSY01 to get the desired values from the sensors
         if self.sensor.read():
                 msg.temperature_celsius     = self.sensor.temperature()                         # Default is degrees C (no arguments)
@@ -43,11 +39,6 @@ class ThermometerDataPublisher(Node):
 
         # Publishing message and logging data sent over the topic /thermometer_data
         self.publisher_.publish(msg)
-        #self.get_logger().info('Mac: %s  T: %0.2f C  %0.2f F  %s' % (msg.mac,
-        #                                                             msg.temperature_celsius, 
-        #                                                             msg.temperature_farenheit,
-        #                                                             msg.local_time))
-        
         self.get_logger().info('\ttime: %s  T: %0.2f C' % (msg.local_time,
                                                         msg.temperature_celsius))
 
