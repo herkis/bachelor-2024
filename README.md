@@ -19,8 +19,8 @@ More details for each command come after
 	. install/setup.bash
 	ros2 launch launch/sensor.launch.py
 
-Go in the dev_ws/ folder
-Import all the files with the command
+Open a terminal window in the folder where you want to locate the program. 
+Import all the files with the command (this will create a folder named SUMS/ with the program)
 
 	git clone https://github.com/Pederbs/SUMS
 
@@ -32,7 +32,7 @@ Source the setup files
 
 	. install/setup.bash
 	
-Launch the publishers
+Launch the all nodes (sensor.launch.py contains parameters that can be changed by the user)
 
 	ros2 launch launch/sensor.launch.py
 
@@ -62,7 +62,8 @@ Sensors used in this project:
 * Barometer: Blue Robotics BAR30
 * Thermometer: Blue Robotics Celsius Fast-Response
 * Dissolved Oxygen probe: Atlas Scientific
-* Connductivity probe: Atlas Scientific
+* Conductivity probe: Atlas Scientific
+* Power Sense Module: BlueRobotics
 
 ## Barometer
 
@@ -83,6 +84,10 @@ Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
 
 Based on a new library, called CATLAS01, which was created with an heavily base on the TSYS01 library mentioned under [Libraries](#libraries).
 Remember to enable I2C on the Raspberry Pi and connect on the correct pins!
+
+## PSM
+
+more info to come
 
 ## Libraries
 
