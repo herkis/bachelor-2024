@@ -59,14 +59,36 @@ def generate_launch_description():
             name='external',
             parameters=[]
         ),
+        
+#        Node(
+#            package='modem_communication',
+#            namespace='modem',
+#            executable='modem_data_handler',
+#            name='subnero',
+#            parameters=[
+#                        {'sample_time': sample_time},
+#                        {'sensor_count': n_sensors},
+#                        {'transfer_delay': transfer_delay},
+#                        {'modem_IP': modem_IP}
+#            ]
+#        ),
+        
         Node(
             package='modem_communication',
             namespace='modem',
             executable='modem_data_handler',
+            name='data_handler',
+            parameters=[
+                        {'sensor_count': n_sensors}
+            ]
+        ),
+        Node(
+            package='modem_communication',
+            namespace='modem',
+            executable='modem_data_sender',
             name='subnero',
             parameters=[
                         {'sample_time': sample_time},
-                        {'sensor_count': n_sensors},
                         {'transfer_delay': transfer_delay},
                         {'modem_IP': modem_IP}
             ]
