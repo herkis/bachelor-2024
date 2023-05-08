@@ -43,8 +43,7 @@ class ModemCommunicator(Node):
 
 
     def modem_callback(self, msg:Modem):
-        modem_msg = Modem()
-        data = modem_msg.internal_data
+        data = msg.internal_data
         
         try:
             self.sock.send(data, 0) # Sending to everyone that wants to listen
