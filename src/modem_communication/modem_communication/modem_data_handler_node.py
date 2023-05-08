@@ -77,7 +77,6 @@ class ModemDataHandler(Node):
 
 
     def publish_data(self):
-        self.times_checked += 1
         if self.times_checked >= self.n_sensors:
             # Getting the local time
             current_time = time.localtime()
@@ -103,6 +102,7 @@ class ModemDataHandler(Node):
         self.barometer_data['depth'] = msg.depth
         self.barometer_data['time'] = msg.local_time
 
+        self.times_checked += 1
         self.publish_data()
 
     def battery_callback (self, msg:Battery):
@@ -111,22 +111,26 @@ class ModemDataHandler(Node):
         self.battery_data['percent'] = msg.battery_percent
         self.battery_data['time'] = msg.local_time
 
+        self.times_checked += 1
         self.publish_data()
  
     def oxygen_callback(self, msg:Oxygen):
         self.oxygen_data['oxygen'] = msg._oxygen_concentration
         self.oxygen_data['time'] = msg.local_time
 
+        self.times_checked += 1
         self.publish_data()
  
     def salinity_callback(self, msg:Salinity):
         self.salinity_data['salinity'] = msg.salinity_value
         self.salinity_data['time'] = msg.local_time
 
+        self.times_checked += 1
         self.publish_data()
  
     def temperature_callback(self, msg:Thermometer):
         self.temperature_data['temperature'] = msg.temperature_celsius
         self.temperature_data['time'] = msg.local_time
 
+        self.times_checked += 1
         self.publish_data()

@@ -7,7 +7,6 @@ import time
 
 class ModemCommunicator(Node):
     # Class variable
-    MODEM_PORT = 1100
     start_time = 0.0
 
     
@@ -19,6 +18,7 @@ class ModemCommunicator(Node):
         self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
         self.transfer_delay  = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
         self.MODEM_IP  = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
+        self.MODEM_PORT  = self.declare_parameter('modem_port', 1100).value  # API port for the modem
         self.start_time = time.time()
 
         # Open a scoket to the modem 
@@ -51,8 +51,9 @@ class ModemCommunicator(Node):
         except:
             self.get_logger().error('COULD NOT SEND DATA TO MODEM')
 
-        while (time.time() - self.start_time) > self.transfer_delay:
-            self.get_logger().info('Listening')
+        # Only [if] works in simulation check if [while] works IRL
+        if (time.time() - self.start_time) > self.transfer_delay:
+            #self.get_logger().info('Listening')
             self.sock.setTimeout(self.sample_time - self.transfer_delay)
             rx = self.sock.receive()
             if rx:
