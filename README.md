@@ -3,7 +3,7 @@
 Sensor-drivers and connection to ROS2 architecture [ROS2 Humble](https://docs.ros.org/en/ros2_documentation/humble/index.html).
 
 
-This is a continuation of two previous groups code for developing sensors to work underwater both with and without the BlueRobotics BlueROV-2.
+This is a continuation of two previous projects for developing sensors to work underwater both as a Standalone Underwater Monitoring Station (SUMS) and for a mobile sensing rig mounted on a BlueRobotics BlueROV-2.
 
 Link to the first original code: https://github.com/NathanLec/Sensors_drivers_BROV2 \
 Link to the second original code: https://github.com/JoJoHTM/Sensors_drivers_BROV2
