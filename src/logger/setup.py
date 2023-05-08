@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'internal_logger = logger.internal_logger:main',
-            'external_logger = logger.external_logger:main'
+            'internal_logger = logger.internal_logger_node_main:main',
+            'external_logger = logger.external_logger_node_main:main'
         ],
     },
 )

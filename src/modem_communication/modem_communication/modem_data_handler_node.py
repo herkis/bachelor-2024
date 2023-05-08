@@ -1,6 +1,5 @@
-import rclpy
 from rclpy.node import Node
-from sensor_interfaces.msg import *
+from sensor_interfaces.msg import Barometer, Battery, Modem, Oxygen, Salinity, Thermometer
 from unetpy import UnetSocket
 import time
 
@@ -8,7 +7,7 @@ import time
 class ModemSubscriberNode(Node):
     # Class variable
     IP = '192.168.42.195'
-    sock  = UnetSocket(IP, 1100)
+    sock  = UnetSocket(IP, 1100)    # CHANGE TO TRY: WITH ERROR MSG
     times_checked = 0
     start_time = 0.0
 
@@ -167,19 +166,3 @@ class ModemSubscriberNode(Node):
         self.get_logger().info('DATA RECIEVED')
         self.times_checked += 1
         self.send_data_modem()
-        
-
-def main(args=None):
-    rclpy.init(args=args)
-
-    modem_subscriber = ModemSubscriberNode()
-
-    rclpy.spin(modem_subscriber)
-
-
-    modem_subscriber.destroy_node()
-    rclpy.shutdown
-
-
-if __name__ == '__main__':
-    main()

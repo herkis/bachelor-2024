@@ -1,4 +1,3 @@
-import rclpy
 from rclpy.node import Node
 from sensor_interfaces.msg import Modem
 import datetime
@@ -34,21 +33,3 @@ class ExternalLoggerNode(Node):
         with open(self.file, 'a', newline='') as csv_file:
                 writer = csv.writer(csv_file, delimiter=';')
                 writer.writerow([data])
-
- 
-        
-
-def main(args=None):
-    rclpy.init(args=args)
-
-    external_logger = ExternalLoggerNode()
-
-    rclpy.spin(external_logger)
-
-
-    external_logger.destroy_node()
-    rclpy.shutdown
-
-
-if __name__ == '__main__':
-    main()

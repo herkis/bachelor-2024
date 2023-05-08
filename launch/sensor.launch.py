@@ -2,10 +2,9 @@ import launch
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
-# Declare Sample time as float
-sample_time = 10.0
-n_sensors = 5
-transfer_delay = 6.0
+sample_time = 10.0      # Sample time in seconds (float)
+n_sensors = 5           # How many sensors that are in use
+transfer_delay = 6.0    # How long transferring data takes in seconds(float)
 
 
 def generate_launch_description():
@@ -62,7 +61,7 @@ def generate_launch_description():
         Node(
             package='modem_communication',
             namespace='modem',
-            executable='modem_subscriber',
+            executable='modem_data_handler',
             name='subnero',
             parameters=[
                         {'sample_time': sample_time},

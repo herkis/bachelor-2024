@@ -15,6 +15,7 @@ class SalinityDataPublisher(Node):
 
         self.sensor = catlas01.CATLAS01()
         # if not self.sensor.init():
+            # If sensor can not be detected
         #     self.get_logger().error("Sensor could not be initialized")
         #     exit(1)
 

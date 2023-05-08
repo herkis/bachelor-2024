@@ -1,4 +1,4 @@
-## Python script to launch all the sensors drivers publisher ##
+## Python script to build all the sensors drivers publisher ##
 # Subprocess is use in python code to interact with the command shell.
 # Here, the attribut "run" launch the command in the shell and wait for the end of the command.
 import subprocess   

@@ -1,4 +1,3 @@
-import rclpy
 from rclpy.node import Node
 from sensor_interfaces.msg import Modem
 import datetime
@@ -36,19 +35,3 @@ class InternalLoggerNode(Node):
                 writer.writerow([data])
 
  
-        
-
-def main(args=None):
-    rclpy.init(args=args)
-
-    internal_logger = InternalLoggerNode()
-
-    rclpy.spin(internal_logger)
-
-
-    internal_logger.destroy_node()
-    rclpy.shutdown
-
-
-if __name__ == '__main__':
-    main()
