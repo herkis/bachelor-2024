@@ -3,6 +3,7 @@ from sensor_interfaces.msg import Modem
 from unetpy import UnetSocket
 import time
 
+# NOT TESTED WITH A MODEM
 
 class ModemCommunicator(Node):
     # Class variable
