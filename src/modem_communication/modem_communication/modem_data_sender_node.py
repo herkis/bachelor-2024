@@ -35,7 +35,7 @@ class ModemCommunicator(Node):
 
         self.internal_data_subscription = self.create_subscription(
             Modem, 
-            '/modem/internal_data', 
+            '/modem/internal_modem_data', 
             self.modem_callback, 
             10)
 
