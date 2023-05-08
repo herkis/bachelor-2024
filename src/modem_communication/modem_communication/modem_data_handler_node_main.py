@@ -6,7 +6,7 @@ def main(args=None):
     rclpy.init(args=args)
 
     # Construct the publisher
-    modem_subscriber = node.ModemSubscriberNode()
+    modem_subscriber = node.ModemDataHandler()
 
     # Reading and publishing data at defined rate 
     rclpy.spin(modem_subscriber)
