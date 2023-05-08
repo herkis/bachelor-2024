@@ -6,8 +6,7 @@ import time
 
 class ModemSubscriberNode(Node):
     # Class variable
-    IP = '192.168.42.195'
-    sock  = UnetSocket(IP, 1100)    # CHANGE TO TRY: WITH ERROR MSG
+    PORT = 1100
     times_checked = 0
     start_time = 0.0
 
@@ -45,7 +44,14 @@ class ModemSubscriberNode(Node):
         self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
         self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # Gets how many sensors it is expecting values from
         self.transfer_delay  = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
+        self.IP  = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
         self.start_time = time.time()
+
+        try:
+            self.sock  = UnetSocket(self.IP, self.PORT)
+        except:
+            self.get_logger().error('Could not establish connection with modem')
+            exit(1)
 
 
         self.barometer_subscription = self.create_subscription(
