@@ -40,15 +40,15 @@ class BatteryDataPublisher(Node):
         msg.local_time =  time.strftime("%H:%M:%S",current_time)
 
         # Reads voltage and current from ADC and prints it every second
-        value = [self.sensor.read_adc(self.A0, gain=self.GAIN), 
-                 self.sensor.read_adc(self.A1, gain=self.GAIN)]
+        voltage_value = self.sensor.read_adc(self.A0, gain=self.GAIN)
+        # current_value = self.sensor.read_adc(self.A1, gain=self.GAIN)
 
-        V = value[0]*self.voltage_constant + 0.6 # Adding 0.6 because it works
-        I = value[1]*self.current_constant
+        V = voltage_value*self.voltage_constant + 0.6 # Adding 0.6 because it works
+        # I = current_value*self.current_constant
         percent = 100/(self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE)*V-320
         
         msg.battery_voltage = V
-        msg.battery_current = I
+        # msg.battery_current = I
         msg.battery_percent = percent
         #else:
         #    print("Sensor read failed!")
@@ -56,5 +56,5 @@ class BatteryDataPublisher(Node):
 
         self.publisher_.publish(msg)
         self.get_logger().info('\t\ttime: %s  V: %0.2f  %%: %d' % (msg.local_time,
-                                                                     msg.battery_voltage,
-                                                                     msg.battery_percent))
+                                                                   msg.battery_voltage,
+                                                                   msg.battery_percent))

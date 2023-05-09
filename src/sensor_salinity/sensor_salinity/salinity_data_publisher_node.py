@@ -37,4 +37,4 @@ class SalinityDataPublisher(Node):
         # Publishing message and logging data sent over the topic /salinity_data
         self.publisher_.publish(msg)
         self.get_logger().info('\ttime: %s  S: %0.2f µs/cm' % (msg.local_time,
-                                                                msg.salinity_value))
+                                                               msg.salinity_value))
