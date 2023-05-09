@@ -34,7 +34,7 @@ class ModemDataHandler(Node):
     def __init__(self):
         super().__init__('ModemDataHandler')
 
-        self.internal_modem_publisher_ = self.create_publisher(Modem, 'internal_modem_data', 10)  # Creates a publisher over the topic internal_modem_data
+        self.internal_modem_publisher_ = self.create_publisher(Modem, 'internal_data', 10)  # Creates a publisher over the topic internal_modem_data
         self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # Gets how many sensors it is expecting values from
 
 

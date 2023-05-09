@@ -21,7 +21,7 @@ class ExternalLoggerNode(Node):
 
         self.external_modem_subscription = self.create_subscription(
             Modem, 
-            '/modem/external_modem_data', 
+            '/modem/external_data', 
             self.external_modem_callback, 
             10)
 

@@ -21,7 +21,7 @@ class InternalLoggerNode(Node):
 
         self.internal_modem_subscription = self.create_subscription(
             Modem, 
-            '/modem/internal_modem_data', 
+            '/modem/internal_data', 
             self.internal_modem_callback, 
             10)
 
