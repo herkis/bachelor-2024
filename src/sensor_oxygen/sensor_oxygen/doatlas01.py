@@ -215,10 +215,6 @@ dev = get_devices()
 
   
 class DOATLAS01(object):
-
-    # Register
-    _DOATLAS01_ADDR = 0x61  # Dec: 97
-    _DOATLAS01_RESET = 0x1E
     
     def __init__(self, bus=1):
         # mg/L
@@ -237,21 +233,6 @@ class DOATLAS01(object):
         if self._bus is None:
             "No bus!"
             return False
-        
-        self._bus.write_byte(self._DOATLAS01_ADDR, self._DOATLAS01_RESET)
-        
-        # Wait for reset to complete
-        time.sleep(0.1)
-        
-        self._k = []
-
-        # Read calibration values
-        # Read one 16 bit byte word at a time
-        for prom in range(0xAA, 0xA2-2, -2):
-            k = self._bus.read_word_data(self._DOATLAS01_ADDR, prom)
-            k =  ((k & 0xFF) << 8) | (k >> 8) # SMBus is little-endian for word transfers, we need to swap MSB and LSB
-            self._k.append(k)
-            
         return True
         
     def read(self):
