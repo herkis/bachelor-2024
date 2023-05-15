@@ -83,7 +83,7 @@ class ModemDataHandler(Node):
             local_time =  time.strftime("%H:%M:%S",current_time)
 
             data = '%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (local_time,
-                                                         self.barometer_data['depth'],
+                                                         self.barometer_data['pressure'],
                                                          self.battery_data['voltage'],
                                                          self.oxygen_data['oxygen'],
                                                          self.salinity_data['salinity'],

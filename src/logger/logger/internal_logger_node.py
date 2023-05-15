@@ -12,7 +12,7 @@ class InternalLoggerNode(Node):
         current_datetime = datetime.datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
         directory = 'log_data/internal/'
         self.file = directory + 'internal_log_' + current_datetime + '.csv'
-        header = 'Time,Depth,Voltage,Oxygen,Salinity,Temerature'
+        header = 'Time,Pressure,Voltage,Oxygen,Salinity,Temerature'
 
         with open(self.file, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file, delimiter=';')
