@@ -14,9 +14,10 @@ class OxygenDataPublisher(Node):
         self.timer = self.create_timer(self.sample_time, self.oxygen_read_and_publish)
 
         self.sensor = doatlas01.DOATLAS01()
-        # if not self.sensor.init():                                                                             ## CHANGE
-        #     self.get_logger().error("Sensor could not be initialized")
-        #     exit(1)
+        if not self.sensor.init():
+            # If sensor can not be detected
+            self.get_logger().error("Sensor could not be initialized")
+            exit(1)
 
     def oxygen_read_and_publish(self):
         # Custom dissolved oxygen message to publish. Can be found in the brov2_interfaces.

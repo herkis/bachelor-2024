@@ -14,10 +14,10 @@ class SalinityDataPublisher(Node):
         self.timer = self.create_timer(self.sample_time, self.salinity_read_and_publish)
 
         self.sensor = catlas01.CATLAS01()
-        # if not self.sensor.init():
+        if not self.sensor.init():
             # If sensor can not be detected
-        #     self.get_logger().error("Sensor could not be initialized")
-        #     exit(1)
+            self.get_logger().error("Sensor could not be initialized")
+            exit(1)
 
     def salinity_read_and_publish(self):
         # Custom conductivity message to publish. Can be found in the brov2_interfaces.
