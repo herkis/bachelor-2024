@@ -6,7 +6,7 @@ import time
 
 
 class BatteryDataPublisher(Node):
-    ## DEFINNING CONSTANTS
+    # HARDWARE CONSTANTS
     A0 = 0 #Channel 0 on ADC connected to voltage read pin
     A1 = 1 #Channel 1 on ADC connected to current read pin
     GAIN = 1 # 4.096V reference point
@@ -29,7 +29,7 @@ class BatteryDataPublisher(Node):
         # Calculate the voltage and current constants
         self.voltage_constant = (self.REFERENCE/self.MAX_VALUE)*11 
         self.current_constant = (self.REFERENCE/self.MAX_VALUE - self.VOLTAGE_OFFSET) * self.CURRENT_SENSE
-        
+
 
     def battery_read_and_publish(self):
         # Custom battery message to publish. Can be found in the sensor_interfaces.
@@ -41,18 +41,17 @@ class BatteryDataPublisher(Node):
 
         # Reads voltage and current from ADC and prints it every second
         voltage_value = self.sensor.read_adc(self.A0, gain=self.GAIN)
-        # current_value = self.sensor.read_adc(self.A1, gain=self.GAIN)
+        current_value = self.sensor.read_adc(self.A1, gain=self.GAIN)
 
-        V = voltage_value*self.voltage_constant + 0.6 # Adding 0.6 because it works
-        # I = current_value*self.current_constant
-        percent = 100/(self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE)*V-320
+        # Calculates all values
+        V = voltage_value * self.voltage_constant + 0.6 # Adding 0.6 because it works
+        I = current_value * self.current_constant
+        percent = 100 / (self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE) * V - 320    # Sivert calculated
         
+        # Populates the message
         msg.battery_voltage = V
-        # msg.battery_current = I
+        msg.battery_current = I
         msg.battery_percent = percent
-        #else:
-        #    print("Sensor read failed!")
-        #    exit(1)
 
         self.publisher_.publish(msg)
         self.get_logger().info('\t\ttime: %s  V: %0.2f  %%: %d' % (msg.local_time,

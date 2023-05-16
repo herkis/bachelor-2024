@@ -29,10 +29,10 @@ class OxygenDataPublisher(Node):
 
         # Reading dissolved oxygen and loading data into custom message
         if self.sensor.read():
-                msg.oxygen_concentration     = self.sensor._oxygen
+            msg.oxygen_concentration     = self.sensor._oxygen
         else:
-                self.get_logger().error("Sensor read failed!")
-                exit(1)
+            self.get_logger().error("Sensor read failed!")
+            exit(1)
 
         # Publishing message and logging data sent over the topic /oxygen_data
         self.publisher_.publish(msg)
