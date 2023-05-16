@@ -25,9 +25,6 @@ class InternalLoggerNode(Node):
             self.internal_modem_callback, 
             10)
 
-
-        self.internal_modem_subscription   # Prevent unused variable warning
-
     def internal_modem_callback(self, msg:Modem):
         data = msg.internal_data
         with open(self.file, 'a', newline='') as csv_file:

@@ -26,8 +26,6 @@ class ExternalLoggerNode(Node):
             10)
 
 
-        self.external_modem_subscription   # Prevent unused variable warning
-
     def external_modem_callback(self, msg:Modem):
         data = msg.external_data
         with open(self.file, 'a', newline='') as csv_file:

@@ -69,14 +69,6 @@ class ModemDataHandler(Node):
             self.temperature_callback, 
             10)
 
-        # Prevent unused variable warning
-        self.barometer_subscription
-        self.battery_subscription
-        self.oxygen_subscription
-        self.salinity_subscription
-        self.temperature_subscription
-
-
 
     def publish_data(self):
         if self.times_checked >= self.n_sensors:

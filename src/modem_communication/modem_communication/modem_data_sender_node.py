@@ -40,8 +40,6 @@ class ModemCommunicator(Node):
             self.modem_callback, 
             10)
 
-        self.internal_data_subscription   # Prevent unused variable warning 
-
 
     def modem_callback(self, msg:Modem):
         data = msg.internal_data
