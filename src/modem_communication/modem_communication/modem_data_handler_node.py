@@ -36,6 +36,7 @@ class ModemDataHandler(Node):
 
         self.internal_modem_publisher_ = self.create_publisher(Modem, 'internal_data', 10)  # Creates a publisher over the topic internal_modem_data
         self.n_sensors  = self.declare_parameter('sensor_count', 5).value  # Gets how many sensors it is expecting values from
+        self.precision  = self.declare_parameter('transfer_precision', 2).value  # Gets how the precission of the data to be transmitted
 
 
         self.barometer_subscription = self.create_subscription(
@@ -68,12 +69,13 @@ class ModemDataHandler(Node):
             self.temperature_callback, 
             10)
 
-        #Prevent unused variable warning
-        self.barometer_subscription   # Prevent unused variable warning
-        self.battery_subscription   # Prevent unused variable warning
-        self.oxygen_subscription   # Prevent unused variable warning
-        self.salinity_subscription   # Prevent unused variable warning
-        self.temperature_subscription   # Prevent unused variable warning
+        # Prevent unused variable warning
+        self.barometer_subscription
+        self.battery_subscription
+        self.oxygen_subscription
+        self.salinity_subscription
+        self.temperature_subscription
+
 
 
     def publish_data(self):
@@ -82,13 +84,17 @@ class ModemDataHandler(Node):
             current_time = time.localtime()
             local_time =  time.strftime("%H:%M:%S",current_time)
 
-            data = '%s,%0.4f,%0.4f,%0.4f,%0.4f,%0.4f' % (local_time,
-                                                         self.barometer_data['pressure'],
-                                                         self.battery_data['voltage'],
-                                                         self.oxygen_data['oxygen'],
-                                                         self.salinity_data['salinity'],
-                                                         self.temperature_data['temperature'])
-            
+            # Not tested on modem
+            data = (
+                f"{local_time},"
+                f"{self.barometer_data['pressure']:.{self.precision}f},"
+                f"{self.battery_data['voltage']:.{self.precision}f},"
+                f"{self.oxygen_data['oxygen']:.{self.precision}f},"
+                f"{self.salinity_data['salinity']:.{self.precision}f},"
+                f"{self.temperature_data['temperature']:.{self.precision}f}"
+            )
+
+
             modem_msg = Modem()
             modem_msg.internal_data = data
 
