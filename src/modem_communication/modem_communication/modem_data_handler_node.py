@@ -86,7 +86,6 @@ class ModemDataHandler(Node):
                 f"{self.temperature_data['temperature']:.{self.precision}f}"
             )
 
-
             modem_msg = Modem()
             modem_msg.internal_data = data
 

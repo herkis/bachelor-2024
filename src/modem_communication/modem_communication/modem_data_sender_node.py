@@ -9,17 +9,17 @@ class ModemCommunicator(Node):
     # Class variable
     start_time = 0.0
 
-    
     def __init__(self):
         super().__init__('ModemCommunicator')
 
         self.external_modem_publisher_ = self.create_publisher(Modem, 'external_data', 10)  # Creates a publisher over the topic external_modem_data
 
+        # Get parameters
         self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
         self.transfer_delay  = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
         self.MODEM_IP  = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
         self.MODEM_PORT  = self.declare_parameter('modem_port', 1100).value  # API port for the modem
-        self.start_time = time.time()
+        self.start_time = time.time()       # DENNE MÅ STÅ FLERE STEDER
 
         # Open a scoket to the modem 
         self.sock  = UnetSocket(self.MODEM_IP, self.MODEM_PORT)
@@ -39,7 +39,6 @@ class ModemCommunicator(Node):
             '/modem/internal_data', 
             self.modem_callback, 
             10)
-
 
     def modem_callback(self, msg:Modem):
         data = msg.internal_data

@@ -2,29 +2,37 @@ from rclpy.node import Node
 from sensor_interfaces.msg import Modem
 import datetime
 import csv
-
+import os
 
 class ExternalLoggerNode(Node):
 
     def __init__(self):
         super().__init__('external_logger')
 
-        current_datetime = datetime.datetime.now().strftime("%d_%m_%Y__%H_%M_%S")
-        directory = 'log_data/external/'
-        self.file = directory + 'external_log_' + current_datetime + '.csv'
+        # Fetches local date and time
+        current_date = datetime.datetime.now().strftime("%d_%m_%Y")
+        current_time = datetime.datetime.now().strftime("%H_%M_%S")
+
+        # Builds file name and destination
+        directory = 'log_data/'+ current_date + '/external/'
+        self.file = directory + 'external_log_' + current_time + '.csv'
+
         header = 'Modem_ID,Time,Pressure,Voltage,Oxygen,Salinity,Temerature'
 
+        # Creating a new directroy if none exists
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+        # Opens a new .csv file
         with open(self.file, 'w', newline='') as csv_file:
             writer = csv.writer(csv_file, delimiter=';')
             writer.writerow([header])
-
 
         self.external_modem_subscription = self.create_subscription(
             Modem, 
             '/modem/external_data', 
             self.external_modem_callback, 
             10)
-
 
     def external_modem_callback(self, msg:Modem):
         data = msg.external_data
