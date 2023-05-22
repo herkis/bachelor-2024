@@ -19,7 +19,7 @@ class ModemCommunicator(Node):
         self.transfer_delay  = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
         self.MODEM_IP  = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
         self.MODEM_PORT  = self.declare_parameter('modem_port', 1100).value  # API port for the modem
-        self.start_time = time.time()       # DENNE MÅ STÅ FLERE STEDER
+        # self.start_time = time.time()       # DENNE MÅ STÅ FLERE STEDER
 
         # Open a scoket to the modem 
         self.sock  = UnetSocket(self.MODEM_IP, self.MODEM_PORT)
@@ -42,6 +42,7 @@ class ModemCommunicator(Node):
 
     def modem_callback(self, msg:Modem):
         data = msg.internal_data
+        self.start_time = time.time()
         
         try:
             self.sock.send(data, 0) # Sending to everyone that wants to listen
@@ -50,9 +51,11 @@ class ModemCommunicator(Node):
             self.get_logger().error('COULD NOT SEND DATA TO MODEM')
 
         # Only [if] works in simulation check if [while] works IRL
-        if (time.time() - self.start_time) > self.transfer_delay:
+        # while (time.time() - self.start_time) > self.transfer_delay:
+        while (time.time() - self.start_time) < self.sample_time:
+            elapsed_time = time.time() - self.start_time
             #self.get_logger().info('Listening')
-            self.sock.setTimeout(self.sample_time - self.transfer_delay)
+            self.sock.setTimeout(self.sample_time - elapsed_time)
             rx = self.sock.receive()
             if rx:
                 external_data = str(rx.from_) + ',' + bytearray(rx.data).decode()

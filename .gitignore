@@ -1,4 +1,5 @@
 build
 install
 log
+log_data/
 .vscode
