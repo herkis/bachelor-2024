@@ -17,6 +17,7 @@
   <exec_depend>sensor_interfaces</exec_depend>
 
   <exec_depend>time</exec_depend>
+  <exec_depend>Adafruit_GPIO</exec_depend>
 
   <export>
     <build_type>ament_python</build_type>
