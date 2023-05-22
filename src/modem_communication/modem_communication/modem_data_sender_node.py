@@ -62,4 +62,5 @@ class ModemCommunicator(Node):
 
                 external_msg = Modem()
                 external_msg.external_data = external_data
+                self.get_logger().info('Recieved data:\n %s' % external_data)
                 self.external_modem_publisher_.publish(external_msg)
