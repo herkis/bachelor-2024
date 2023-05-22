@@ -17,7 +17,7 @@ class InternalLoggerNode(Node):
         directory = 'log_data/' + current_date + '/internal/'
         self.file = directory + 'internal_log_' + current_time + '.csv'
 
-        header = 'Time,Pressure,Voltage,Oxygen,Salinity,Temerature'
+        header = 'Time,Pressure,Voltage,Oxygen,Salinity,Temperature'
 
         # Creating a new directroy if none exists
         if not os.path.exists(directory):

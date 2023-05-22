@@ -17,7 +17,7 @@ class ExternalLoggerNode(Node):
         directory = 'log_data/'+ current_date + '/external/'
         self.file = directory + 'external_log_' + current_time + '.csv'
 
-        header = 'Modem_ID,Time,Pressure,Voltage,Oxygen,Salinity,Temerature'
+        header = 'Modem_ID,Time,Pressure,Voltage,Oxygen,Salinity,Temperature'
 
         # Creating a new directroy if none exists
         if not os.path.exists(directory):
