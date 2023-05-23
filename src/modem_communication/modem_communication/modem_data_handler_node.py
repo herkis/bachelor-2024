@@ -89,7 +89,7 @@ class ModemDataHandler(Node):
             modem_msg = Modem()
             modem_msg.internal_data = data
 
-            self.get_logger().info(data)
+            self.get_logger().info('Data Published to Topic')
             self.internal_modem_publisher_.publish(modem_msg)
             self.times_checked = 0
 

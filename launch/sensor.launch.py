@@ -1,13 +1,22 @@
 # import launch # Not needed?
 from launch import LaunchDescription
 from launch_ros.actions import Node
+import random
 
-sample_time = 10.0              # Sample time in seconds (float)
-n_sensors = 5                   # How many sensors that are in use
+sample_time = 7.0              # Sample time in seconds (float)
+n_sensors = 3                   # How many sensors that are in use
 transfer_delay = 6.0            # How long transferring data takes in seconds(float)
-modem_IP = '192.168.42.195'     # IP for the modem
+modem_IP = '192.168.42.86'     # IP for the modem
 modem_port = 1100               # Port for the modem
 precision = 3
+
+# Random generator to avoid deadlocks
+lower_bounds = [2, 4]   # Seconds
+upper_bounds = [4, 6]   # Seconds
+random_bounds = [
+    random.randrange(lower_bounds[0]*1000, lower_bounds[1]*1000, 200),
+    random.randrange(upper_bounds[0]*1000, upper_bounds[1]*1000, 200)
+]
 
 
 def generate_launch_description():
@@ -94,7 +103,9 @@ def generate_launch_description():
                         {'sample_time': sample_time},
                         {'transfer_delay': transfer_delay},
                         {'modem_IP': modem_IP},
-                        {'modem_port': modem_port}
+                        {'modem_port': modem_port},
+                        {'lower_bound': random_bounds[0]},
+                        {'upper_bound': random_bounds[1]}
             ]
         ),
     ])

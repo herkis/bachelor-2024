@@ -2,8 +2,9 @@ from rclpy.node import Node
 from sensor_interfaces.msg import Modem
 from unetpy import UnetSocket
 import time
+import random
 
-# NOT TESTED WITH A MODEM
+# Need More Testing
 
 class ModemCommunicator(Node):
     # Class variable
@@ -19,20 +20,15 @@ class ModemCommunicator(Node):
         self.transfer_delay  = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
         self.MODEM_IP  = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
         self.MODEM_PORT  = self.declare_parameter('modem_port', 1100).value  # API port for the modem
-        # self.start_time = time.time()       # DENNE MÅ STÅ FLERE STEDER
+
+        self.LOWER_BOUND  = self.declare_parameter('lower_bound', 3000).value  # API port for the modem
+        self.UPPER_BOUND  = self.declare_parameter('upper_bound', 9000).value  # API port for the modem
 
         # Open a scoket to the modem 
         self.sock  = UnetSocket(self.MODEM_IP, self.MODEM_PORT)
 
-        # Check if the modem is connected
-        # This feature is UNTESTED on an actual modem
-        # if not self.sock.isConnected():
-        try:
-            self.sock.isConnected()
-        except:
-            self.get_logger().error('Could not establish connection with modem')
-            exit(1)
-
+        # Does not work
+        self.get_logger().info('Bounds for this runtime:\nLower Bound: %i \nUpper Bound: %i' % (self.LOWER_BOUND, self.UPPER_BOUND))
 
         self.internal_data_subscription = self.create_subscription(
             Modem, 
@@ -41,26 +37,59 @@ class ModemCommunicator(Node):
             10)
 
     def modem_callback(self, msg:Modem):
-        data = msg.internal_data
         self.start_time = time.time()
+        self.sock.cancel()
+        data = msg.internal_data
         
         try:
             self.sock.send(data, 0) # Sending to everyone that wants to listen
-            self.get_logger().info('DATA SENT TO MODEM')
+            self.get_logger().info('Data Sent to Modem')
         except:
             self.get_logger().error('COULD NOT SEND DATA TO MODEM')
 
+        full_time = self.start_time + self.transfer_delay
         # Only [if] works in simulation check if [while] works IRL
         # while (time.time() - self.start_time) > self.transfer_delay:
-        while (time.time() - self.start_time) < self.sample_time:
+        while (time.time() - full_time) < self.sample_time:
+            # self.get_logger().info('HELLO FROM LISTNER')
             elapsed_time = time.time() - self.start_time
-            #self.get_logger().info('Listening')
-            self.sock.setTimeout(self.sample_time - elapsed_time)
+            # self.sock.setTimeout((self.sample_time - elapsed_time)*1000)
+            self.sock.setTimeout(random.randrange(self.LOWER_BOUND, self.UPPER_BOUND, 300))
             rx = self.sock.receive()
-            if rx:
+            if rx is not None:
                 external_data = str(rx.from_) + ',' + bytearray(rx.data).decode()
 
                 external_msg = Modem()
                 external_msg.external_data = external_data
-                self.get_logger().info('Recieved data:\n %s' % external_data)
+                self.get_logger().info('Recieved data:\n%s' % external_data)
                 self.external_modem_publisher_.publish(external_msg)
+
+
+# Fungerer ganske bra
+# Nådde 44, 7 og 11 externe logg før deadlock
+    # def modem_callback(self, msg:Modem):
+    #     self.start_time = time.time()
+    #     # self.sock.cancel()
+    #     data = msg.internal_data
+        
+    #     try:
+    #         self.sock.send(data, 0) # Sending to everyone that wants to listen
+    #         self.get_logger().info('Data Sent to Modem')
+    #     except:
+    #         self.get_logger().error('COULD NOT SEND DATA TO MODEM')
+
+    #     full_time = self.start_time + self.transfer_delay
+    #     # Only [if] works in simulation check if [while] works IRL
+    #     # while (time.time() - self.start_time) > self.transfer_delay:
+    #     while (time.time() - full_time) < self.sample_time:
+    #         # self.get_logger().info('HELLO FROM LISTNER')
+    #         elapsed_time = time.time() - self.start_time
+    #         self.sock.setTimeout((self.sample_time - elapsed_time)*1000)
+    #         rx = self.sock.receive()
+    #         if rx is not None:
+    #             external_data = str(rx.from_) + ',' + bytearray(rx.data).decode()
+
+    #             external_msg = Modem()
+    #             external_msg.external_data = external_data
+    #             self.get_logger().info('Recieved data:\n%s' % external_data)
+    #             self.external_modem_publisher_.publish(external_msg)
