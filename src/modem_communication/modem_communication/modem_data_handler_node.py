@@ -81,6 +81,7 @@ class ModemDataHandler(Node):
                 f"{local_time},"
                 f"{self.barometer_data['pressure']:.{self.precision}f},"
                 f"{self.battery_data['voltage']:.{self.precision}f},"
+                f"{self.battery_data['current']:.{self.precision}f},"
                 f"{self.oxygen_data['oxygen']:.{self.precision}f},"
                 f"{self.salinity_data['salinity']:.{self.precision}f},"
                 f"{self.temperature_data['temperature']:.{self.precision}f}"

@@ -3,12 +3,12 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 import random
 
-sample_time = 7.0              # Sample time in seconds (float)
-n_sensors = 3                   # How many sensors that are in use
+sample_time = 10.0              # Sample time in seconds (float)
+n_sensors = 5                   # How many sensors that are in use
 transfer_delay = 6.0            # How long transferring data takes in seconds(float)
 modem_IP = '192.168.42.86'     # IP for the modem
 modem_port = 1100               # Port for the modem
-precision = 3
+precision = 2
 
 # Random generator to avoid deadlocks
 lower_bounds = [2, 4]   # Seconds
@@ -70,20 +70,6 @@ def generate_launch_description():
             name='external',
             parameters=[]
         ),
-        
-#        Node(
-#            package='modem_communication',
-#            namespace='modem',
-#            executable='modem_data_handler',
-#            name='subnero',
-#            parameters=[
-#                        {'sample_time': sample_time},
-#                        {'sensor_count': n_sensors},
-#                        {'transfer_delay': transfer_delay},
-#                        {'modem_IP': modem_IP}
-#            ]
-#        ),
-        
         Node(
             package='modem_communication',
             namespace='modem',
