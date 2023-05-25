@@ -4,18 +4,25 @@ from launch_ros.actions import Node
 import random
 
 sample_time = 10.0              # Sample time in seconds (float)
-n_sensors = 5                   # How many sensors that are in use
+n_sensors = 5                   # How many sensors that are in use (int)
 transfer_delay = 6.0            # How long transferring data takes in seconds(float)
-modem_IP = '192.168.42.86'     # IP for the modem
-modem_port = 1100               # Port for the modem
-precision = 2
+modem_IP = '192.168.42.86'      # IP for the modem (string)
+modem_port = 1100               # Port for the modem (int) [only change if using simulator]
+precision = 2                   # Variable for specifying the precision of the transmitted data (int)
+
+# Header for identifying logged data
+log_header = 'Time,Pressure,Voltage,Current,Oxygen,Salinity,Temperature'
 
 # Random generator to avoid deadlocks
-lower_bounds = [2, 4]   # Seconds
-upper_bounds = [4, 6]   # Seconds
+ms = 1000
+step = 200
+lower_bounds = [2 * ms, 4 * ms]
+upper_bounds = [4 * ms, 6 * ms]
+
+# Generating random bounds for each runtime based on the bounds above
 random_bounds = [
-    random.randrange(lower_bounds[0]*1000, lower_bounds[1]*1000, 200),
-    random.randrange(upper_bounds[0]*1000, upper_bounds[1]*1000, 200)
+    random.randrange(lower_bounds[0], upper_bounds[0], step),
+    random.randrange(lower_bounds[1], upper_bounds[1], step)
 ]
 
 
@@ -61,14 +68,14 @@ def generate_launch_description():
             namespace='logger',
             executable='internal_logger',
             name='internal',
-            parameters=[]
+            parameters=[{'log_header': log_header}]
         ),
         Node(
             package='logger',
             namespace='logger',
             executable='external_logger',
             name='external',
-            parameters=[]
+            parameters=[{'log_header': log_header}]
         ),
         Node(
             package='modem_communication',

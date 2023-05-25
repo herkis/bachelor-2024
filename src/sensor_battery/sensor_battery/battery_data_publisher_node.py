@@ -7,15 +7,16 @@ import time
 
 class BatteryDataPublisher(Node):
     # HARDWARE CONSTANTS
-    A0 = 0 #Channel 0 on ADC connected to voltage read pin
-    A1 = 1 #Channel 1 on ADC connected to current read pin
-    GAIN = 1 # 4.096V reference point
-    REFERENCE = 4.096 #Volt
-    MAX_VALUE = 2**15 #Bits (the 16th-bit is sign reserved)
-    VOLTAGE_OFFSET = 0.33 #Volt
-    CURRENT_SENSE = 37.8788 #Ampere / Volt
-    MIN_BATTERY_VOLATAGE = 19.2 #Volt
-    MAX_BATTERY_VOLTAGE = 25.2 #Volt
+    A0 = 0                      # Channel 0 on ADC connected to voltage read pin
+    A1 = 1                      # Channel 1 on ADC connected to current read pin
+    GAIN = 1                    # 4.096V reference point
+    REFERENCE = 4.096           # Volt
+    MAX_VALUE = 2**15           # Bits (the 16th-bit is sign reserved)
+    VOLTAGE_OFFSET = 0.33       # Volt
+    CURRENT_SENSE = 37.8788     # Ampere / Volt
+    VOLTAGE_SENSE = 11          # Volt / Volt
+    MIN_BATTERY_VOLATAGE = 19.2 # Volt
+    MAX_BATTERY_VOLTAGE = 25.2  # Volt
 
     # Initialize
     def __init__(self):
@@ -27,7 +28,7 @@ class BatteryDataPublisher(Node):
         self.sensor = ads1x15.ADS1115()
         
         # Calculate the voltage and current constants
-        self.voltage_constant = (self.REFERENCE/self.MAX_VALUE)*11 
+        self.voltage_constant = (self.REFERENCE/self.MAX_VALUE) * self.VOLTAGE_SENSE
         self.current_constant = (self.REFERENCE/self.MAX_VALUE - self.VOLTAGE_OFFSET) * self.CURRENT_SENSE
 
 
@@ -46,7 +47,7 @@ class BatteryDataPublisher(Node):
         # Calculates all values
         V = voltage_value * self.voltage_constant + 0.6 # Adding 0.6 because it works
         I = current_value * self.current_constant
-        percent = 100 / (self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE) * V - 320    # Sivert calculated
+        percent = 100 / (self.MAX_BATTERY_VOLTAGE - self.MIN_BATTERY_VOLATAGE) * V - 320    # Does not work
         
         # Populates the message
         msg.battery_voltage = V

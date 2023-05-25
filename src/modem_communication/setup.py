@@ -21,9 +21,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            #'modem_data_handler = OLD_modem_communication.modem_data_handler_node_main:main'
             'modem_data_handler = modem_communication.modem_data_handler_node_main:main',
-            'modem_data_sender = modem_communication.modem_data_sender_node_main:main'
+            'modem_data_sender = modem_communication.modem_data_communicator_node_main:main'
         ],
     },
 )

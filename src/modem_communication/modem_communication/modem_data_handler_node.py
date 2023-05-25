@@ -76,7 +76,8 @@ class ModemDataHandler(Node):
             current_time = time.localtime()
             local_time =  time.strftime("%H:%M:%S",current_time)
 
-            # Not tested on modem
+            # Generate string that will be sent to modem with
+            # predefined pressision
             data = (
                 f"{local_time},"
                 f"{self.barometer_data['pressure']:.{self.precision}f},"
@@ -92,9 +93,10 @@ class ModemDataHandler(Node):
 
             self.get_logger().info('Data Published to Topic')
             self.internal_modem_publisher_.publish(modem_msg)
+            # Reset counter
             self.times_checked = 0
 
-
+    # Unpacking data
     def barometer_callback(self, msg:Barometer):
         self.barometer_data['pressure'] = msg.pressure_mbar
         self.barometer_data['depth'] = msg.depth
