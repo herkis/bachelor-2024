@@ -198,7 +198,7 @@ class AtlasI2C:
 UNITS_mg_L = 1
 
 # Wait time
-delay_time = 1.5
+delay_time = 0.6
 
 
 def get_devices():
