@@ -32,7 +32,7 @@ class ThermometerDataPublisher(Node):
         # Calls the function sensor.read in TSY01 to get the desired values from the sensors
         if self.sensor.read():
             msg.temperature_celsius     = self.sensor.temperature()                         # Default is degrees C (no arguments)
-            # msg.temperature_farenheit   = self.sensor.temperature(tsys01.UNITS_Farenheit)   # Request Farenheit
+            msg.temperature_farenheit   = self.sensor.temperature(tsys01.UNITS_Farenheit)   # Request Farenheit
         else:
             self.get_logger().error("Sensor read failed!")
             exit(1)

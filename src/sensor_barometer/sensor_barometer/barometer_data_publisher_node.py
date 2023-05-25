@@ -33,7 +33,7 @@ class BarometerDataPublisher(Node):
         if self.sensor.read():
                 msg.depth                   = self.sensor.depth()                               # Depth in meters using the fluid density (kg/m^3) configured by setFluidDensity()
                 msg.pressure_mbar           = self.sensor.pressure()                            # Default is mbar (no arguments)
-        #        msg.pressure_psi            = self.sensor.pressure(ms5837.UNITS_psi)            # Request psi
+                msg.pressure_psi            = self.sensor.pressure(ms5837.UNITS_psi)            # Request psi
         else:
                 self.get_logger().error("Sensor read failed!")
                 exit(1)

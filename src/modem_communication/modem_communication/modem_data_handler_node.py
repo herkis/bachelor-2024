@@ -10,7 +10,8 @@ class ModemDataHandler(Node):
     barometer_data = {
         'time': '00:00',
         'depth': 0.0,
-        'pressure': 0.0
+        'pressure': 0.0,
+        'pressurePSI': 0.0
     }
     battery_data = {
         'time': '00:00',
@@ -28,7 +29,8 @@ class ModemDataHandler(Node):
     }
     temperature_data = {
         'time': '00:00',
-        'temperature': 0.0
+        'temperature': 0.0,
+        'temperatureF': 0.0
     }
     
     def __init__(self):
@@ -99,6 +101,7 @@ class ModemDataHandler(Node):
     # Unpacking data
     def barometer_callback(self, msg:Barometer):
         self.barometer_data['pressure'] = msg.pressure_mbar
+        self.barometer_data['pressurePSI'] = msg.pressure_psi
         self.barometer_data['depth'] = msg.depth
         self.barometer_data['time'] = msg.local_time
 
@@ -130,6 +133,7 @@ class ModemDataHandler(Node):
  
     def temperature_callback(self, msg:Thermometer):
         self.temperature_data['temperature'] = msg.temperature_celsius
+        self.temperature_data['temperatureF'] = msg.temperature_farenheit
         self.temperature_data['time'] = msg.local_time
 
         self.times_checked += 1
