@@ -4,8 +4,6 @@ from unetpy import UnetSocket
 import time
 import random
 
-# Need More Testing
-
 class ModemCommunicator(Node):
     # Class variable
     start_time = 0.0
@@ -16,18 +14,20 @@ class ModemCommunicator(Node):
         self.external_modem_publisher_ = self.create_publisher(Modem, 'external_data', 10)  # Creates a publisher over the topic external_modem_data
 
         # Get parameters
-        self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
-        self.transfer_delay  = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
-        self.MODEM_IP  = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
-        self.MODEM_PORT  = self.declare_parameter('modem_port', 1100).value  # API port for the modem
+        self.sample_time = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
+        self.transfer_delay = self.declare_parameter('transfer_delay', 6.0).value  # How many seconds a transmition usually takes
+        self.modem_IP = self.declare_parameter('modem_IP', '0.0.0.0').value  # IP for the modem
+        self.modem_PORT = self.declare_parameter('modem_port', 1100).value  # API port for the modem
 
-        self.LOWER_BOUND  = self.declare_parameter('lower_bound', 3000).value  # API port for the modem
-        self.UPPER_BOUND  = self.declare_parameter('upper_bound', 9000).value  # API port for the modem
+        self.lower_bound = self.declare_parameter('lower_bound', 3000).value  # Lower bound for random
+        self.upper_bound = self.declare_parameter('upper_bound', 9000).value  # Upper bound for random
 
         # Open a socket to the modem 
-        self.sock  = UnetSocket(self.MODEM_IP, self.MODEM_PORT)
+        self.sock  = UnetSocket(self.modem_IP, self.modem_PORT)
 
-        self.get_logger().info('Bounds for this runtime:\nLower Bound: %i \nUpper Bound: %i' % (self.LOWER_BOUND, self.UPPER_BOUND))
+        self.get_logger().info('Bounds for this runtime:\
+            \nLower Bound: %i \nUpper Bound: %i' % \
+            (self.lower_bound, self.upper_bound))
 
         self.internal_data_subscription = self.create_subscription(
             Modem, 
@@ -49,14 +49,28 @@ class ModemCommunicator(Node):
         # Receiving 
         full_time = self.start_time + self.transfer_delay
         while (time.time() - full_time) < self.sample_time:
-            # Setting a random timer for receiving
-            self.sock.setTimeout(random.randrange(self.LOWER_BOUND, self.UPPER_BOUND, 300))
-            rx = self.sock.receive()
-            # Unpacking data
-            if rx is not None:
-                external_data = str(rx.from_) + ',' + bytearray(rx.data).decode()
+            self.modem_listen()
+            # # Setting a random timer for receiving
+            # self.sock.setTimeout(random.randrange(self.lower_bound, self.upper_bound, 300))
+            # rx = self.sock.receive()
+            # # Unpacking data
+            # if rx is not None:
+            #     external_data = str(rx.from_) + ',' + bytearray(rx.data).decode()
 
-                external_msg = Modem()
-                external_msg.external_data = external_data
-                self.get_logger().info('Recieved data:\n%s' % external_data)
-                self.external_modem_publisher_.publish(external_msg)
+            #     external_msg = Modem()
+            #     external_msg.external_data = external_data
+            #     self.get_logger().info('Recieved data:\n%s' % external_data)
+            #     self.external_modem_publisher_.publish(external_msg)
+
+    def modem_listen(self):
+        # Setting a random timer for receiving
+        self.sock.setTimeout(random.randrange(self.lower_bound, self.upper_bound, 300))
+        rx = self.sock.receive()
+        # Unpacking data
+        if rx is not None:
+            data = str(rx.from_) + ',' + bytearray(rx.data).decode()
+
+            msg = Modem()
+            msg.external_data = data
+            self.get_logger().info('Recieved data:\n%s' % data)
+            self.external_modem_publisher_.publish(msg)

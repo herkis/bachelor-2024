@@ -14,7 +14,7 @@ class ThermometerDataPublisher(Node):
         self.sample_time  = self.declare_parameter('sample_time', 2.0).value  # Gets sample time as a parameter, default = 2
         self.timer = self.create_timer(self.sample_time, self.thermometer_read_and_publish)
 
-        # Assign the function TSYS01() in the tsys01.py to self.sensor
+        # Assign the object TSYS01() from tsys01.py to self.sensor
         self.sensor = tsys01.TSYS01()
         if not self.sensor.init():
             # If sensor can not be detected
@@ -37,8 +37,7 @@ class ThermometerDataPublisher(Node):
             self.get_logger().error("Sensor read failed!")
             exit(1)
 
-        # Publishing message and logging data sent over the topic /thermometer_data
+        # Publishing message to /thermometer_data and logging data to terminal 
         self.publisher_.publish(msg)
         self.get_logger().info('\ttime: %s  T: %0.2f C' % (msg.local_time,
                                                            msg.temperature_celsius))
-
