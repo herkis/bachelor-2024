@@ -90,7 +90,7 @@ def generate_launch_description():
         Node(
             package='modem_communication',
             namespace='modem',
-            executable='modem_data_sender',
+            executable='modem_data_communicator',
             name='subnero',
             parameters=[
                         {'sample_time': sample_time},
