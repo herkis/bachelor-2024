@@ -42,7 +42,7 @@ class ModemCommunicator(Node):
         
         try:
             self.sock.send(data, 0) # Sending to everyone that wants to listen
-            self.get_logger().info('Data Sent to Modem')
+            self.get_logger().info('Data Sent to Modem \n%s' % data)
         except:
             self.get_logger().error('COULD NOT SEND DATA TO MODEM')
 
