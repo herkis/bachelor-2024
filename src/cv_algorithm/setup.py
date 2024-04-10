@@ -26,7 +26,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cv_algorithm=cv_algorithm.cv_algorithm:main',
+            'computer_vision=cv_algorithm.computer_vision:main',
 	],
     },
 )
