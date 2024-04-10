@@ -20,6 +20,9 @@ def highlight_objects(frame, squares):
         cv2.rectangle(frame, top_left, bottom_right, (0, 255, 0), thickness=2)
     return frame
 
+# Output directory
+output_dir = "/home/SUMS/SUMS/images"
+
 # Initialize the YOLO model
 model_path = "/home/SUMS/SUMS/src/cv_algorithm/models/yolov8_weights.pt"
 model = YOLO(model_path)
@@ -48,7 +51,7 @@ while True:
     current_time = time.time()
     if current_time - start_time >= save_interval:
         # Save processed frame with detections
-        filename = f"output_{frame_count}.jpg"
+        filename = f"{output_dir}/output_{frame_count}.jpg"
         cv2.imwrite(filename, processed_frame)
         print(f"Saved: {filename}")
         start_time = current_time
