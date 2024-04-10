@@ -21,7 +21,7 @@ def highlight_objects(frame, squares):
     return frame
 
 # Initialize the YOLO model
-model_path = "/home/SUMS/SUMS/YOLOv8/5Epok.pt"
+model_path = "/home/SUMS/SUMS/src/cv_algorithm/models/yolov8_weights.pt"
 model = YOLO(model_path)
 
 # Initialize webcam
