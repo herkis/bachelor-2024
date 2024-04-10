@@ -7,6 +7,10 @@
   <maintainer email="henrik-21@hotmail.com">SUMS</maintainer>
   <license>TODO: License declaration</license>
 
+  <build_depend>cv_bridge</build_depend>
+  <build_export_depend>cv_bridge</build_export_depend>
+  <exec_depend>cv_bridge</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
