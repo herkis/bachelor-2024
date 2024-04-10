@@ -20,42 +20,46 @@ def highlight_objects(frame, squares):
         cv2.rectangle(frame, top_left, bottom_right, (0, 255, 0), thickness=2)
     return frame
 
-# Output directory
-output_dir = "/home/SUMS/SUMS/images"
+def main():
+    # Output directory
+    output_dir = "/home/SUMS/SUMS/images"
 
-# Initialize the YOLO model
-model_path = "/home/SUMS/SUMS/src/cv_algorithm/models/yolov8_weights.pt"
-model = YOLO(model_path)
+    # Initialize the YOLO model
+    model_path = "/home/SUMS/SUMS/src/cv_algorithm/models/yolov8_weights.pt"
+    model = YOLO(model_path)
 
-# Initialize webcam
-cap = cv2.VideoCapture(2)
-if not cap.isOpened():
-    print("Error: Could not open webcam")
-    exit()
+    # Initialize webcam
+    cap = cv2.VideoCapture(2)
+    if not cap.isOpened():
+        print("Error: Could not open webcam")
+        exit()
 
-start_time = time.time()
-save_interval = 10  # seconds
-frame_count = 0
+    start_time = time.time()
+    save_interval = 10  # seconds
+    frame_count = 0
 
-while True:
-    ret, frame = cap.read()
-    if not ret:
-        print("Error: Can't receive frame (stream end?). Exiting ...")
-        break
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Error: Can't receive frame (stream end?). Exiting ...")
+            break
 
-    # Perform detection (assuming direct frame processing is possible)
-    results = model.predict(frame, conf=0.35)
-    squares = get_squares(results)
-    processed_frame = highlight_objects(frame.copy(), squares)
+        # Perform detection (assuming direct frame processing is possible)
+        results = model.predict(frame, conf=0.35)
+        squares = get_squares(results)
+        processed_frame = highlight_objects(frame.copy(), squares)
 
-    current_time = time.time()
-    if current_time - start_time >= save_interval:
-        # Save processed frame with detections
-        filename = f"{output_dir}/output_{frame_count}.jpg"
-        cv2.imwrite(filename, processed_frame)
-        print(f"Saved: {filename}")
-        start_time = current_time
-        frame_count += 1
+        current_time = time.time()
+        if current_time - start_time >= save_interval:
+            # Save processed frame with detections
+            filename = f"{output_dir}/output_{frame_count}.jpg"
+            cv2.imwrite(filename, processed_frame)
+            print(f"Saved: {filename}")
+            start_time = current_time
+            frame_count += 1
 
-# When everything is done, release the capture
-cap.release()
+    # When everything is done, release the capture
+    cap.release()
+
+if __name__ == '__main__':
+    main()
