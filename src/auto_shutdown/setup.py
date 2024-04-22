@@ -19,8 +19,8 @@ setup(
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
-        'console_scripts': ['battery_data_publisher = sensor_battery.battery_data_publisher_node:main',
-            'battery_monitor = auto_shutdown.autoshutdown:main',
+        'console_scripts': ['battery_publisher = sensor_battery.battery_data_publisher_node:main',
+            'battery_monitor = auto_shutdown.auto_shutdown:main',
         ],
     },
 )
