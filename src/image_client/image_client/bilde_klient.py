@@ -12,7 +12,7 @@ class ImagePublisher(Node):
         self.timer_period = 1  # seconds (adjust as needed)
         self.timer = self.create_timer(self.timer_period, self.publish_image)
         self.bridge = CvBridge()
-        self.image_path = "/home/SUMS/SUMS/images/output_0.jpg"  # Update this path
+        self.image_path = "/home/SUMS/bachelor-2024/images/output_0.jpg"  # Update this path
 
     def publish_image(self):
         cv_image = cv2.imread(self.image_path)

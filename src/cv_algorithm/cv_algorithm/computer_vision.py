@@ -22,10 +22,10 @@ def highlight_objects(frame, squares):
 
 def main():
     # Output directory
-    output_dir = "/home/SUMS/SUMS/images"
+    output_dir = "/home/SUMS/bachelor-2024/images"
 
     # Initialize the YOLO model
-    model_path = "/home/SUMS/SUMS/src/cv_algorithm/models/yolov8_weights.pt"
+    model_path = "/home/SUMS/bachelor-2024/src/cv_algorithm/models/yolov8_weights.pt"
     model = YOLO(model_path)
 
     # Initialize webcam

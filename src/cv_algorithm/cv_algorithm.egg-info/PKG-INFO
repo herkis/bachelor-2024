@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: cv-algorithm
+Version: 0.0.0
+Summary: A ROS 2 package for computer vision algorithms using PyTorch, including YOLOv8.
+Home-page: UNKNOWN
+Maintainer: SUMS
+Maintainer-email: henrik-21@hotmail.com
+License: MIT
+Platform: UNKNOWN
+
+UNKNOWN
+

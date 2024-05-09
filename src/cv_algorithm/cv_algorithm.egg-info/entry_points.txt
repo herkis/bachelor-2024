@@ -1,0 +1,3 @@
+[console_scripts]
+computer_vision = cv_algorithm.computer_vision:main
+
