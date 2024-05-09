@@ -122,4 +122,5 @@ def generate_launch_description():
             executable='battery_monitor',
             name='shutdown',
             parameters=[{'sample_time': sample_time}]
+        ),
     ])
