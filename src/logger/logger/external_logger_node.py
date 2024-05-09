@@ -9,7 +9,7 @@ class ExternalLoggerNode(Node):
     def __init__(self):
         super().__init__('external_logger')
 
-        self.header  = self.declare_parameter('log_header', '').value  # Gets header as a parameter
+        self.header  = self.declare_parameter('log_header', 'Time,Pressure,Voltage,Current,Oxygen,Salinity,Temperature').value  # Gets header as a parameter
 
         # Fetches local date and time
         current_date = datetime.datetime.now().strftime("%d_%m_%Y")
