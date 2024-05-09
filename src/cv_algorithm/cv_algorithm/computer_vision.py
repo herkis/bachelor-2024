@@ -29,7 +29,9 @@ def main():
     model = YOLO(model_path)
 
     # Initialize webcam
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(4)
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
     if not cap.isOpened():
         print("Error: Could not open webcam")
         exit()
