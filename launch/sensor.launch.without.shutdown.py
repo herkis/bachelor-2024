@@ -116,10 +116,4 @@ def generate_launch_description():
                 {'upper_bound': random_bounds[1]}
             ]
         ),
-        Node(
-            package='auto_shutdown',
-            namespace='sensors',
-            executable='battery_monitor',
-            name='shutdown',
-            parameters=[{'sample_time': sample_time}]
     ])
