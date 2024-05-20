@@ -7,13 +7,14 @@ This is a continuation of two previous projects for developing sensors to work u
 
 Link to the first original code: https://github.com/NathanLec/Sensors_drivers_BROV2 \
 Link to the second original code: https://github.com/JoJoHTM/Sensors_drivers_BROV2
+Link to the third original code: https://github.com/Peder/SUMS
 
 ## Use
 
 For a quick use, paste these commands
 More details for each command come after
 
-	git clone https://github.com/Pederbs/SUMS
+	git clone https://github.com/herkis/bachelor-2024
 
 	python3 init.py
 	. install/setup.bash
@@ -22,7 +23,7 @@ More details for each command come after
 Open a terminal window in the folder where you want to locate the program. 
 Import all the files with the command (this will create a folder named SUMS/ with the program)
 
-	git clone https://github.com/Pederbs/SUMS
+	git clone https://github.com/herkis/bachelor-2024
 
 Build all the packages with init.py
 
